@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>闲鱼</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css"  type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="__STATIC__/css/goodstyle.css">
+
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css"  type="text/css">
+    <link rel="stylesheet" href="__STATIC__/fonts/font-slider.css" type="text/css">
+
+    <!-- jQuery and Modernizr-->
+    <script src="__STATIC__/js/jquery-2.1.1.js"></script>
+
+    <!-- Core JavaScript Files -->
+    <script src="__STATIC__/js/bootstrap.min.js"></script>
+
+    <script src="__STATIC__/js/photo-gallery.js"></script>
+    <script src="__STATIC__/js/angular.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="__STATIC__/js/html5shiv.js"></script>
+    <script src="__STATIC__/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<!--Top-->
+<nav id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <select class="language">
+                    <option value="English" selected>中文</option>
+                    <option value="France">English</option>
+
+                </select>
+                <!--<select class="货币">-->
+                    <!--<option value="USD" selected>USD</option>-->
+                    <!--<option value="EUR">EUR</option>-->
+                    <!--<option value="DDD">DDD</option>-->
+                <!--</select>-->
+            </div>
+            <div class="col-xs-6">
+                <ul class="top-link">
+                    <li><a href="account.html"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                    <li><a href="contact.html"><span class="glyphicon glyphicon-envelope"></span> 客服中心</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--Header-->
+<!--  -->
+<!--Navigation-->
+<nav id="menu" class="navbar">
+    <div class="container">
+        <div class="navbar-header"><span id="heading" class="visible-xs">Categories</span>
+            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{:url('home/index/main')}">首页</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">手机二手</a>
+                    <!-- <div class="dropdown-menu"> -->
+                        <!-- <div class="dropdown-inner"> -->
+                            <!-- <ul class="list-unstyled"> -->
+                                <!-- <li><a href="category.html">Window</a></li> -->
+                                <!-- <li><a href="category.html">MacBook</a></li> -->
+                            <!-- </ul> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">二手车 &amp; 估价</a>
+                   
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">降降 &amp; 降</a>
+               
+                </li>
+                <li><a href="category啊.html">发布闲置</a></li>
+                <li class="dropdown"><a href="{:url('index/personal/index')}" >我的闲置</a>
+                   
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--//////////////////////////////////////////////////-->
+<!--///////////////////Product Page///////////////////-->
+<!--//////////////////////////////////////////////////-->
+<div id="page-content" class="single-page">
+    <div class="container">
+      
+        <div class="row">
+            <div id="main-content" class="col-md-8">
+                <div class="product">
+                    <div class="col-md-6">
+                        <div class="image">
+                            <img src="{$image}" alt="图片加载失败"/>
+                            <div class="image-more">
+                                <ul class="row">
+                                    {foreach $img as $value}
+                                        <li class="col-lg-3 col-sm-3 col-xs-4" >
+                                            <a href="#"><img class="img-responsive" src="__STATIC__/{$value.imgurl}"></a>
+                                        </li>
+                                    {/foreach}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="caption">
+                            <div class="name"><h3>{{name}}</h3></div>
+                            <div class="info">
+                                <ul>
+                                    <li>所在地: {$city}</li>
+                                    <li>ID: {{pid}}</li>
+                                </ul>
+                            </div>
+                            <div class="price"><span>￥{{original}}</span>￥{{price}}</div>
+
+                            <div class="well"><label>运费: </label> <i>{{freight}}</i> </div>
+                            <div class="well"><label>数量: </label> <input class="form-inline quantity" type="text" value="0"><a href="{:url('goods/index/pay')}"  pid="{{pid}}"   class="btn btn-2 ">立刻购买</a></div>
+                            <div class="share well">
+                                <strong style="margin-right: 13px;">收藏 :</strong>
+                                <a href="javascript:void(0);" class="btn btn-default" target="_blank" id="{{pid}}" ng-click="collect12()">
+                                    <!--<i class="fa fa-twitter"></i>-->
+                                    收藏(<span>{{collect}}</span>)
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-default" pid="{{pid}}" ng-click="zan()"  target="_blank">
+                                    <!--<i class="fa fa-twitter"></i>-->
+                                    点赞({{num}})
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="product-desc">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#description">宝贝介绍</a></li>
+                        <li><a href="#review">留言</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane fade in active">
+                            <h4>卖家信息</h4>
+                            <p>来闲鱼{$today}天了，卖出{$salecount}件宝贝。{$sex}</p>
+                            <h4>{{name}}</h4>
+                            <p>{{detail}}</p>
+                            <img src="{$image}" alt="图片加载失败"/>
+
+                        </div>
+                        <div id="review" class="tab-pane fade">
+
+                            <div class="review-form">
+                                <form >
+                                    <label>
+                                        <span>留下你想对卖家说的话:</span>
+                                        <div  contentEditable="true" class="col-lg-10" style="border:1px solid black"  id="message"></div>
+                                    </label>
+                                    <div class="text-right">
+                                        <input class="btn btn-default" type="reset" name="reset" value="取消" onclick="document.getElementById('message').innerHTML=''">
+                                        <input class="btn btn-default" ng-click="Liuyan()" type="button" name="Submit" value="提交">
+                                    </div>
+                                </form>
+                                <!--<h4>留言</h4>-->
+                            </div>
+                            <div class="review-text">
+                                <style>
+                                    .review-item{
+                                        position: relative;
+                                        list-style: none;
+                                        outline: 0;
+                                        padding: 10px;
+                                        border-bottom: 1px solid #D4D4D4;
+                                    }
+                                </style>
+                                <ul>
+
+                                    <li class="review-item" ng-repeat="kk in reviewer" ng-if="kk.comments_to==0">
+                                        <div class="row"  >
+                                            <div class="col-lg-2 col-md-2 col-xl-2 col-xs-3">
+                                                <img src="//img.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png" style="width: 40px;height: 40px">
+                                                <div>{{kk.uname}}</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-xl-9 col-xs-9">
+                                                <p>{{kk.content}}</p>
+                                                <div  ng-repeat="huifu in Huire">
+                                                    <p ng-if="huifu.to_cmid==kk.cmid" class="text-right">{{huifu.uname}}说:{{huifu.content}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form class="form-inline text-right">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInput" placeholder="留下你想说的话">
+                                            </div>
+                                            <button type="button" class="btn btn-default" cimd="{{kk.cmid}}" ng-click="reviewTore()">留言</button>
+                                        </form>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="sidebar" class="col-md-4">
+                <div class="widget wid-categories">
+                    <div class="heading"><h4>卖家信息</h4></div>
+                    <div class="content">
+                        <ul>
+                            <li><a href="javascript:void(0);">{$uid}</a><img style="width: 50px;height: 50px;border-radius: 80%;float: right" src="{$head}" alt='加载失败' /></li>
+                            <li><a href="javascript:void(0);">来闲鱼{$today}天了，卖出{$salecount}件宝贝。{$sex}</a></li>
+                            <li><a href="javascript:void(0);">{$yanz}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget wid-type">
+                    <div class="heading"><h4>联系卖家</h4></div>
+                    <div class="content">
+                        <a href="{:url('chat/login/dologin')}" target='_blank'><span class="glyphicon glyphicon-envelope"></span> {$uname}</a>
+                    </div>
+                </div>
+                <div class="widget wid-product">
+                    <div class="heading"><h4>卖家的其他闲置（{$count}）</h4></div>
+                    <div class="content">
+                        {foreach $othergoods as $val}
+                        <div class="product">
+                            <a href="#"><img src="{$val.image}" /></a>
+                            <div class="wrapper">
+                                <h5><a href="#">{$val.pname}</a></h5>
+                                <div class="price">${$val.price}</div>
+                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            </div>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    Copyright &copy; 2015.Company name All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- IMG-thumb -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script>
+
+    var gid= $.cookie('gid');
+//    if(gid==undefined)
+//    {
+//        gid=1;
+//    }
+    $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+            $(this).tab('show');
+        });
+        $('.nav-tabs a').on('shown.bs.tab', function(event){
+            var x = $(event.target).text();         // active tab
+            var y = $(event.relatedTarget).text();  // previous tab
+            $(".act span").text(x);
+            $(".prev span").text(y);
+        });
+    });
+    var urlgoods="{:url('goods/goods/goodsmess')}?gid="+gid;
+
+    var urlReview="{:url('goods/goods/review')}?gid="+gid;
+
+    var urlCollect="{:url('goods/goods/collect')}?gid="+gid;
+
+    var urlZan="{:url('goods/goods/zan')}?gid="+gid;
+
+    var urlLiuY="{:url('goods/goods/liuy')}?gid="+gid;
+
+    var urlReady="{:url('goods/goods/ready')}";
+    var urlgetGoods="{:url('goods/index/pay')}";
+    var urlreview_to_to="{:url('goods/goods/reviewto')}";
+</script>
+<script src="__STATIC__/js/goods.js"></script>
+</body>
+</html>

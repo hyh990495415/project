@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>订单页面</title>
+</head>
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css"  type="text/css">
+<!-- jQuery and Modernizr-->
+<script src="__STATIC__/js/jquery-2.1.1.js"></script>
+<script src="__STATIC__/js/angular.js"></script>
+<!-- Core JavaScript Files -->
+<script src="__STATIC__/js/bootstrap.min.js"></script>
+<!-- Angular -->
+<link rel="stylesheet" href="__STATIC__/css/goodstyle.css">
+
+<link rel="stylesheet" href="__STATIC__/css/pay.css">
+
+<style>
+    .Media{
+        display: flex;
+        align-items:flex-start;
+    }
+    .Media-figure{
+        margin-right: 1em;
+    }
+    .Media-bodey{
+        flex: 1;
+    }
+    .btnred{
+        font-size: 14px;
+        font-weight: 700;
+        background: #ff0036;
+        color: whitesmoke;
+    }
+    .getaddr{
+        border: 2px solid #e5e5e5;
+    }
+    .adde{
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        width: 237px;
+        margin: 0 14px 14px 0;
+        color: #666;
+        cursor: pointer;
+        /*//border: 2px solid #e5e5e5;*/
+    }
+    .add-head{
+        width: 100%;
+        border-bottom: 1px solid #f2f2f2;
+        padding: 0 0 5px;
+        margin-bottom: 5px;
+        line-height: 18px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .add-inner{
+        z-index: 2;
+        position: relative;
+        padding: 11px 15px;
+        background: url(//img.alicdn.com/tps/i2/T1VPiBXvpeXXbjLKQ7-237-106.png) no-repeat;
+        overflow: hidden;
+    }
+    @media (max-width: 768px) {
+        .imgsizemax{
+            width: 90px;
+            height: 80px;
+        }
+    }
+    @media (min-width: 768px) {
+        .imgsize{
+            width: 150px;
+            height: 150px;
+        }
+    }
+</style>
+<body ng-app="myApp" ng-controller="myCtrl">
+<nav id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <select class="language">
+                    <option value="English" selected>中文</option>
+                    <option value="France">English</option>
+
+                </select>
+             
+            </div>
+            <div class="col-xs-6">
+                <ul class="top-link">
+                    <li><a href="account.html"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                    <li><a href="contact.html"><span class="glyphicon glyphicon-envelope"></span> 客服中心</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<nav id="menu" class="navbar">
+    <div class="container">
+        <div class="navbar-header"><span id="heading" class="visible-xs">Categories</span>
+            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{:url('home/personal/main')}">首页</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">手机二手</a>
+                   
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">二手车 &amp; 估价</a>
+                    
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">降降 &amp; 降</a>
+                    
+                </li>
+                <li><a href="category啊.html">发布闲置</a></li>
+                <li class="dropdown"><a href="{:url('index/personal/index')}" >我的闲置</a>
+                   
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid " >
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-1">
+            <button type="button" class="btn btn-default  btn-lg" aria-label="Left Align">
+                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="goodsmess">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2 col-md-2 col col-xl-12"><h4>商品信息</h4></div>
+    </div>
+    <div class="row" style="margin-top: 5px">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-7">
+            <!--
+                商品具体
+             -->
+
+            <div class="Media" style="background-color: #f2f7ff">
+                <img class="Media-figure img-responsive imgsizemax imgsize" src="{$g_img}" >
+                <p class="Media-bodey">
+                    <span>{$pname} </span><br>
+                    <br> <br>
+                    <b style="color: #ff0036;font: 700 26px tahoma;">价格：￥{$price}</b><br>
+
+                    <b style="">运费：￥{$freight}</b>
+                </p>
+            </div>
+            <!--<goodsmessas></goodsmessas>-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xl-12"><h4>收货地址</h4></div>
+    </div>
+    <!--
+        收货地址
+    -->
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-11">
+
+            <!--<goodsmessas></goodsmessas>-->
+           <div  class="adde active" ng-repeat="add in allarr">
+               <div class="add-inner">
+                   <div class="add-head"><span>{{add.province}}</span> <span>{{add.city}}</span>（<span>{{add.receive}}</span> 收）</div>
+                   <div><span>{{add.aname}}</span> <span>{{add.address}}</span> <span>{{add.cell}}</span></div>
+                   <a href="#">修改</a>
+               </div>
+           </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+            <a href="#">管理收货地址</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-7 col-md-7 col-xl-7"></div>
+        <div class="col-lg-3 col-md-3 col-xl-3 text-right"style="border: 1px solid #ff0036;margin-top: 5px">
+            <div style="padding: 3px 0 0 0">
+                <i>实付款：</i><b style="color: #ff0036;font: 700 26px tahoma;">￥{{allpay}}</b><br>
+                <span><b>寄送至:</b><i>{{province}} {{city}} {{aname}} {{address}}</i></span></br>
+                <span><b>收货人:</b><i>{{receive}} {{cell}}</i></span></br>
+                <a href="javascript:void(0);" ng-click="orderCreate()" class="btn btn-2 btnred ">提交订单</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<footer style="margin-top: 5px" >
+    <div class="copyright" style="background-color: #2D93CA">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    Copyright &copy; 2015.Company name All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script>
+    /**
+     * 返回前一页（或关闭本页面）
+     * <li>如果没有前一页历史，则直接关闭当前页面</li>
+     */
+    //goBack();
+
+    var gid= $.cookie('gid');
+
+   // var urlLiuY="{:url('goods/goods/liuy')}?gid="+gid;
+    var orderid=null;
+    var urlAdd="{:url('goods/goods/personaddr')}?gid="+gid;
+    var urlCreateOrder="{:url('goods/goods/createOr')}";
+    var urlpaymoney="{:url('goods/index/paymoney')}";
+    var app=angular.module('myApp',[]);
+    app.controller('myCtrl',function($scope,$http){
+        $http({
+            method:'get',
+            url:urlAdd
+        }).then(function success(res){
+            console.log(res.data);
+            $scope.price=res.data[1].price;
+            $scope.freight=res.data[1].freight;
+            $scope.allpay= parseInt(res.data[1].freight)+parseInt(res.data[1].price);
+            //console.log(res.data[0][0].province);
+            $scope.allarr=res.data[0];
+            if(res.data[0].length>0)
+            {
+                $scope.pid=res.data[1].pid;
+                $scope.adid=res.data[0][0].adid;
+                $scope.province=res.data[0][0].province;
+                $scope.city=res.data[0][0].city;
+                $scope.aname=res.data[0][0].aname;
+                $scope.address=res.data[0][0].address;
+                $scope.cell=res.data[0][0].cell;
+                //$scope.price=res.data[0][0].price;
+                //$scope.freight=res.data[0][0].freight;
+                $scope.receive=res.data[0][0].receive;
+            }else{
+                $scope.province='-----';
+                $scope.city='-----';
+                $scope.area='-----';
+                $scope.address='-----';
+                $scope.cell='-----';
+                $scope.receive='-----';
+            }
+
+        });
+
+
+        //提交订单
+        $scope.orderCreate=function(){
+            var pid=$scope.pid;
+            var adid=$scope.adid;//
+            var price=$scope.price;
+            var freight=$scope.freight;
+            //var pid=1;
+            //var adid=1;
+            if(adid==undefined||adid==0)
+            {
+                alert('请设置收货地址');
+            }
+            else
+            {
+                $http({
+                    method:'post',
+                    url:urlCreateOrder,
+                    data:{pid:pid,adid:adid,price:price,freight:freight}
+                }).then(function success(res){
+                    console.log(res.data);
+                    if(res.data['code']==10003)
+                    {
+                        orderid=res.data['oid'];
+                        if(confirm('订单生成成功，是否马上支付？'))
+                        {
+                            // console.log(urlpaymoney);
+                            window.location.href="{:url('goods/index/paymoney')}?orderid="+orderid;
+                        }else{
+                            window.location.href="{:url('goods/index/goods')}?";
+                        }
+
+                    }else{
+                        alert(res.data['errorM']);
+                    }
+                })
+            }
+        }
+    });
+</script>
+<script src="__STATIC__/js/pay.js"></script>
+
+</html>

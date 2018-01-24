@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <!--<script src="__STATIC__/js/angular.js"></script>-->
+
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <!--cookie JS-->
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <style>
+        .item{
+            flex:1;
+            line-height: 70px;
+        }
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+
+        .flew1{
+            display: flex;
+            /*-webkit-flex 为了兼容性*/
+            display: -webkit-flex;
+            /*flex-direction:row;*/
+            justify-content:  space-between;
+        }
+        .flew2{
+            flex: 1;
+            align-self: center;
+            font-size: 17px;
+            font-family: 微软雅黑;
+            text-align: center
+        }
+        .flew3{
+            flex: 1;
+            align-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .flew4{
+            flex: 1;
+            align-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        @media (min-width: 768px){
+            .font_size{
+                font-size: 24px;
+                list-style: none;
+
+            }
+            .myli
+            {
+                display: inline;
+            }
+            .img-responsive{
+                width: 80px;
+                height: 100px;
+            }
+        }
+        @media(max-width:768px ){
+
+            .img-responsive{
+                width: 80px;
+                height: 100px;
+            }
+            .myli
+            {
+                display: inline;
+                font-size: 12px;
+            }
+        }
+
+        /*多图上传*/
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #upBox{
+            text-align: center;
+            width:80%;
+            padding: 20px;
+            border: 1px solid #666;
+            margin: auto;
+            margin-top: 150px;
+            margin-bottom: 200px;
+            position: relative;
+            border-radius: 10px;
+        }
+        #inputBox{
+            width: 100%;
+            height: 40px;
+            border: 1px solid cornflowerblue;
+            color: cornflowerblue;
+            border-radius: 20px;
+            position: relative;
+            text-align: center;
+            line-height: 40px;
+            overflow: hidden;
+            font-size: 16px;
+        }
+        #inputBox input{
+            width: 114%;
+            height: 40px;
+            opacity: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: -14%;
+
+        }
+        #imgBox{
+            text-align: left;
+        }
+        .imgContainer{
+            display: inline-block;
+            width: 32%;
+            height: 150px;
+            margin-left: 1%;
+            border: 1px solid #666666;
+            position: relative;
+            margin-top: 30px;
+            box-sizing: border-box;
+        }
+        .imgContainer img{
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+        }
+        .imgContainer p{
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: black;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+        .imgContainer:hover p{
+            display: block;
+        }
+        #btn{
+            outline: none;
+            width: 100px;
+            height: 30px;
+            background: cornflowerblue;
+            border: 1px solid cornflowerblue;
+            color: white;
+            cursor: pointer;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="mycollec">
+    <mycollec></mycollec>
+
+    <!--多图上传-->
+    <div class="modal fade " id="modify_release" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">
+        <div class="modal-dialog" style="width: 30%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" >人脸识别</h4>
+                </div>
+                <div class="modal-body"></div>
+                <form  action="{:url('index/personal/modify_release')}" >
+                    <div style="width: 100%;position: relative;">
+                        <div id="upBox">
+                            <div id="inputBox"><input type="file" title="请选择图片" id="file" multiple accept="image/png,image/jpg,image/gif,image/JPEG"/>点击选择图片</div>
+                            <div id="imgBox">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    var vueObj=new Vue();
+    Vue.component('mycollec', {
+        template: '<div class="container">\
+                       <div style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0">\
+                            <h3 style="margin: 10px 0 10px 0">我发布的</h3>\
+                        </div>\
+                    <div>\
+                        <ul class="flew1" style="height: 30px;background-color: #ffda44;">\
+                            <li class="myli flew2">商品图</li>\
+                            <li class="myli flew2">商品名</li>\
+                            <li class="myli flew2">价格</li>\
+                            <li class="myli flew2" >时间</li>\
+                            <li class="myli flew2" >状态</li>\
+                            <li class="myli flew2" >编辑</li>\
+                        </ul>\
+                        <ul v-for="item in message" class="flew1" style="height: 80px;margin-top: 20px">\
+                            <li class="myli flew2"><img :src="item.image" class="img-responsive" style="cursor: pointer" title="点击跳转到商品详情" @click="commodity_details(item.pid)"></li>\
+                            <li class="myli flew2">{{item.pname}}</li>\
+                            <li class="myli flew2">{{item.price}}</li>\
+                            <li class="myli flew2">{{item.publishtime}}</li>\
+                            <li class="myli flew2" v-if="item.state==0">正常中</li>\
+                            <li class="myli flew2" v-if="item.state==1">已下架</li>\
+                            <li class="myli flew2 dropdown all-camera-dropdown">\
+                                <button class="btn btn-default dropdown-toggle " data-toggle="dropdown" href="#">编辑<b class="caret"></b></button>\
+                                <ul class="dropdown-menu">\
+                                    <li><a data-toggle="tab" href="#" @click="modify_release(item.pid)">修改发布</a></li>\
+                                    <li><a data-toggle="tab" href="#" @click="cancel_release(item.pid)">取消发布</a></li>\
+                                </ul>\
+                            </li>\
+                         </ul>\
+                         <ul class="pager" >\
+                            <li><a href="#" @click="upperPage()">上一页</a></li>\
+                            <li><a href="#" @click="nextPage()">下一页</a></li>\
+                        </ul>\
+                    </div>\
+                </div>',
+        data: function () {
+            return {
+                message:[], //我买入的订单数组
+                nowpage:1,     //当前页
+                tatalpages:0    //总页数
+            }
+        },
+        created: function () {
+            this.init(this.nowpage);
+        },
+        methods: {
+            //    默认
+            init: function (nowpage) {
+                var _this = this;
+                $.ajax({
+                    type: 'post',
+                    data: {'nowpage': nowpage, 'amount': 5},
+                    url: "{:url('index/Personal/getRelease')}",
+                    dataType: 'json',
+                    success: function (res) {
+                        _this.tatalpages = res.tatalpages;//总页
+                        _this.nowpage = JSON.parse(res.nowpage);//当前页
+                        _this.message = res.message;
+                        console.log(res)
+                    }, error: function (res) {
+
+                    }
+
+                })
+            },
+            //上一页
+            upperPage: function () {
+                var nowpage = parseInt(this.nowpage);
+                if (nowpage > 1) {
+                    this.nowpage -= 1;
+                    nowpage -= 1;
+                } else {
+                    nowpage = 1;
+                }
+                this.init(nowpage);
+            },
+            //下一页
+            nextPage: function () {
+                var nowpage = this.nowpage;
+
+                if (nowpage + 1 < parseInt(this.tatalpages)) {
+                    this.nowpage = nowpage += 1;
+                } else {
+                    this.nowpage = parseInt(this.tatalpages);
+                    nowpage = parseInt(this.tatalpages);
+                }
+                this.init(nowpage);
+            },
+            //点击当前页
+            mypage: function (res) {
+                this.init(res);
+            },
+            //跳转商品详情
+            commodity_details:function(pid)
+            {
+                window.parent.location.href="{:url('goods/index/goods')}?gid="+pid;
+            },
+            //取消发布
+            cancel_release:function (pid) {
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/Personal/cancel_release')}",
+                    data:{'pid':pid},
+                    dataType:'json',
+                    success:function (res) {
+//                        console.log(res)
+                        if(res.code==1001)
+                        {
+                            alert(res.msg);
+                            window.location.reload();
+                        }else
+                        {
+                            alert(res.msg);
+                            window.location.reload();
+
+                        }
+                    },error:function (res) {
+
+                    }
+                })
+            },
+        //  修改发布
+            modify_release:function()
+            {
+                $("#modify_release").modal('show')
+            }
+        }
+    })
+    new Vue({
+        el:"#mycollec"
+    })
+</script>
+<script>
+    //iframe 自适应
+    $(window.parent.document).find("#iframeId").load(function () {
+        var main = $(window.parent.document).find("#iframeId");
+        var thisheight = $(document).height() + 500;
+        main.height(thisheight);
+    });
+</script>
+<!--多图上传 -->
+<script src="__STATIC__/js/uploadImg.js"></script>
+<script type="text/javascript">
+    imgUpload({
+        inputId:'file', //input框id
+        imgBox:'imgBox', //图片容器id
+        buttonId:'btn', //提交按钮id
+        upUrl:'index/personal/index',  //提交地址
+        data:'file1' //参数名
+    })
+</script>
+</html>

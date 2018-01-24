@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单</title>
+    <link rel="stylesheet" href="__STATIC__/css/layui.css">
+    <script src="__STATIC__/js/jquery-3.2.1.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
+</head>
+<body>
+<div class="layui-collapse" lay-filter="select">
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">查询订单</h2>
+        <div class="layui-colla-content"> <!--默认显示layui-show-->
+            <form class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">订单编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="oid" autocomplete="off" placeholder="请输入订单编号" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                        <label class="layui-form-label">用户名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="uname" autocomplete="off" placeholder="请输入用户名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="gname" autocomplete="off" placeholder="请输入商品名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <select name="ostate">
+                            <option value="">请选择状态</option>
+                            <option value="未支付" selected="">未支付</option>
+                            <option value="已支付">已支付</option>
+                            <option value="取消">取消</option>
+                            <option value="已完成">已完成</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="pway" value="钱包" title="钱包" checked="">
+                        <input type="radio" name="pway" value="微信支付" title="微信支付">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="order" lay-filter="demo"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script src="__STATIC__/layui.js"></script>
+<script>
+    var listurl ='{:url("back/Goods/slist")}';
+</script>
+<script src="__STATIC__/js/order_all.js"></script>
+</body>
+</html>

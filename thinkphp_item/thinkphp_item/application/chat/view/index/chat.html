@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LayIM测试</title>
+    <!--<link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">-->
+    <link href="__STATIC__/layim/css/layim.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="__STATIC__/css/chat.css">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+</head>
+<script src="__STATIC__/layim/lay/lib.js"></script>
+<script src="__STATIC__/layim/lay/layer/layer.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="__STATIC__/js/Mychat.js"></script>
+
+<script src="__STATIC__/layui/layui.js"></script>
+<body>
+<style>
+    .Media{
+        display: flex;
+        align-items:center;
+    }
+    .Media-figure{
+        margin-right: 1em;
+    }
+    .Media-body{
+        flex: 1;
+    }
+</style>
+<div id="ltian">
+    <div id="us" class="jb">
+        <ul class="layui-nav layui-nav-tree layui-nav-side-a"   lay-filter="chatman">
+            <li class="layui-nav-item layui-nav-itemed " >
+                <a href="javascript:;">联系人</a>
+                <dl class="layui-nav-child" style="height: 400px">
+                    {foreach $friend as $value}
+                    <dd class="site-demo-active" data-type="tabAdd"><a href="javascript:void(0);">
+
+                        <div class="Media">
+                            <img class="Media-figure" style="width: 40px;height: 40px;border-radius: 40px" src="__STATIC__/{$value.man_head}">
+                            <p class="Media-body"><span style="color: white">{$value.man_account}</span></p>
+                        </div>
+                    </a></dd>
+                    {/foreach}
+                    <!--<dd><a href="javascript:viod(0);">后台模版</a></dd>-->
+                    <!--<dd><a href="javascript:viod(0);">电商平台</a></dd>-->
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div id="ct">
+        <div id="chat" style="margin-top: 20px;margin-left: 30px">
+            <div id="test"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    var chat=new Mychat($('#test'),'liliy',123,'1222.jpg',function(res){
+        console.log();
+    });
+
+    var socket = new WebSocket('ws://127.0.0.1:7272');
+    socket.onopen = function(){
+        // 登录
+        var login_data = '{"type":"init","id":"{$uinfo.uid}","username":"{$uinfo.uname}","account":"{$uinfo.account}","head":"{$uinfo.head}"}';
+        socket.send( login_data );
+        //console.log( login_data );
+        console.log("websocket握手成功!");
+    };
+    //监听收到的消息
+    socket.onmessage = function(res){
+        //console.log(res.data);
+        var data = eval("("+res.data+")");
+        switch(data['message_type']){
+            // 服务端ping客户端
+            case 'ping':
+                socket.send('{"type":"ping"}');
+                break;
+            // 登录 更新用户列表
+            case 'init':
+                //console.log(data['id']+"登录成功");
+                //layim.getMessage(res.data); //res.data即你发送消息传递的数据（阅读：监听发送的消息）
+                break;
+            // 检测聊天数据
+            case 'chatMessage':
+                //console.log(data.data);
+                layim.getMessage(data.data);
+                break;
+            // 离线消息推送
+            case 'logMessage':
+                setTimeout(function(){layim.getMessage(data.data)}, 1000);
+                break;
+            // 用户退出 更新用户列表
+            case 'logout':
+                break;
+            //聊天还有不在线
+            case 'ctUserOutline':
+                console.log('11111');
+                //layer.msg('好友不在线', {'time' : 1000});
+                break;
+
+        }
+    };
+//fasongxiaoxi
+$('.layim_sendbtn').click(function(){
+    var friid=$(event.target).attr('friid');
+    console.log(friid);
+    var a=$('#layim_write'+friid+'').html();
+    console.log(a);
+    var message=$('<li class="layim_chateme"><div class="layim_chatuser"><cite class="layim_chattime"><span class="layim_chatname">'+'liliy'+'</span>'+'tiem'+'</cite><img src="__STATIC__/image/iphone.png"></div>'+
+            '<div class="layim_chatsay">'+a+'</div>'+'</li>');
+    var father=$('#layim_area'+friid+'').append(message);
+    var messagesss={'type':'chatMessage',
+                    'data':{'to':
+                                    {'id':friid,'type':'friend'},
+                                'mine':{'content':a}}};
+   var e= JSON.stringify(messagesss);
+    socket.send( e );
+})
+</script>
+</html>

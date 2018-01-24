@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <script src="__STATIC__/js/angular.js"></script>
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <!--jquery.cookie-->
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <!--个人设置-->
+    <style>
+
+
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+
+        .lin{
+            line-height: 40px;
+        }
+        .tex{
+            text-align: center;
+        }
+        li
+        {
+            list-style: none;
+        }
+        @media (min-width: 768px){
+            /*设置字体*/
+            .font_size{
+                font-size: 24px;
+            }
+            /*菜单功能块*/
+            .co1{
+                width: 20%;
+                background-color: white;
+            }
+            /*菜单内容块*/
+            .co2{
+                width: 60%;
+                text-align: center;
+                background-color: grey;
+            }
+            /*其他块*/
+            .co3{
+                width: 20%;
+                background-color: grey;
+            }
+                /*菜单的间距*/
+            .item{
+                /*flex:1;*/
+                line-height: 40px;
+            }
+
+            .flew1{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+            .flew2{
+                flex:1;
+            }
+            .flew3{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+
+            .flew4{
+                flex:1;
+            }
+        }
+        @media(max-width:768px ){
+            /*菜单功能块*/
+            .co1{
+                width: 100%;
+
+            }
+            /*菜单内容块*/
+            .co2{
+                width: 100%;
+
+            }
+            /*其他块*/
+            .co3{
+                width: 100%;
+                background-color: grey;
+            }
+
+            .flew1{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+
+            .flew2{
+                flex:1;
+
+            }
+
+            .fle1 {
+                display: flex;
+                flex-direction: column;
+                font-size: 20px;
+                text-align: center;
+
+            }
+
+            .style1
+            {
+                margin-left: 15px;
+                margin-right: 15px;
+                margin-top: 10px;
+                font-size: 18px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default font_size" role="navigation" style="background-color: #ffda44;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">闲趣</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="row style1" style="line-height: 48px">
+                    <div class="col-lg-11">
+                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11"><a href="{:url('home/index/main')}">首页</a></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </li>
+                <li  class="row style1" style="line-height: 48px">
+                    <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11"><a>消息</a></div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="row style1" style="line-height: 48px">
+                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6"><span
+                            class="glyphicon glyphicon-user"></span><span id="myusername"></span></div>
+                    <!--<div class="col-lg-1 hidden-xs" >|</div>-->
+                    <div class="ccol-lg-6 col-xs-6 col-sm-6 col-md-6"><span class="glyphicon glyphicon-log-in"></span><a
+                            href="{:url('index/Personal/cancel_page')}">注销</a></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!--&lt;!&ndash;导航条&ndash;&gt;-->
+<!--<ul class=" flew1 font_size " style="height: 80px;background-color: #ffda44;margin-bottom: 10px;">-->
+    <!--<li class="flew2"  style=" align-self: center;"><a href="#" >闲趣</a></li>-->
+        <!--<li class="flew2"  style=" align-self: center;"><a href="#" >首页</a>&emsp;|&emsp;<a href="#" >消息</a></li>-->
+        <!--<li class="flew2" style=" align-self: center;"><input type="text" class="form-control flw2" placeholder="请输入名称"  ></li>-->
+        <!--<li class="flew2" style=" align-self: center;"><button  class="btn btn-default ">搜索</button></li>-->
+        <!--<li class="flew2" style=" align-self: center;">&emsp;|&emsp;</li>-->
+<!--</ul>-->
+<!--内容 -->
+<div class="flew3  " style="height: 700px;background-color: #f0f0f0">
+    <div class=" co1 ">
+        <ul class="item font_size fle1 " style="list-style-type: none;text-align: center">
+        <li style="cursor: default;margin-top: 20px">全部功能</li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/message')}" style="color:grey;">个人信息</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/release')}" style="color: grey;">我发布的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/sell')}" style="color: grey;">我卖出的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/purchase')}" style="color: grey;">我买到的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/collection')}" style="color: grey;">我收藏的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/auction')}" style="color: grey;">我拍买的</a></li>
+        <!--{volist name="menu" id="data"}-->
+        <!--<li style="cursor: pointer;"><a class="b4" onclick="menu()" url={$data.muntUrl}-->
+               <!--style="color: grey;">{$data.muntName}</a></li>-->
+        <!--{/volist}-->
+        </ul>
+    </div>
+    &emsp;
+    <div class="co2 " >
+        <iframe width="100%"  style="height: 100%" id="iframeId"
+                frameborder="0"
+        scrolling="no" src="{:url('index/Personal/release')}"></iframe>
+    </div>
+    <!--<div class="co3 "></div>-->
+</div>
+
+<!--页脚-->
+<div class=" flew1 container-default hidden-xs" style="height: 100px;margin-top: 10px">
+    <div class="flew1 container "  style="margin-top: 10px;align-self: center;">
+        <div>网络文化经营许可证：<a href="#">浙网文[2013]0268-027号</a></div>
+        <div>信息网络传播视听节目许可证：1109364号</div>
+        <div>互联网违法和不良信息举报电话:0571-81683755 blxx@list.alibaba-inc.com</div>
+    </div>
+</div>
+<!--<div class="flew1 container" style="margin-top: 10px;border-top: 1px solid #ababab">-->
+    <!--<div>网络文化经营许可证：<a href="#">浙网文[2013]0268-027号</a></div>-->
+    <!--<div>信息网络传播视听节目许可证：1109364号</div>-->
+    <!--<div>互联网违法和不良信息举报电话:0571-81683755 blxx@list.alibaba-inc.com</div>-->
+<!--</div>-->
+</body>
+<script>
+
+// 菜单点击事件
+    function menu() {
+             var url= $(event.target).attr('url');
+//             console.log(url);
+            $("iframe").prop("src",url);
+    }
+
+// 菜单 鼠标触发事件
+$(function(){
+    $(".b4").on({
+        mouseover : function(){
+            $(this).css("color","red");
+        } ,
+        mouseout : function(){
+            $(this).css("color","grey");
+        }
+    }) ;
+}) ;
+//    ifreme 自适应
+
+$("#iframeId").load(function () {
+    var mainheight = $(this).contents().find("body").height() + 200;
+    $(this).height(mainheight);
+});
+//function SetCwinHeight()
+// {
+//       var iframeid=document.getElementById("iframeid"); //iframe id
+//       if (document.getElementById)
+//           {
+//                if (iframeid && !window.opera)
+//                 {
+//                    if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+//                            iframeid.height = iframeid.contentDocument.body.offsetHeight;
+//                         }
+//                      else if(iframeid.Document && iframeid.Document.body.scrollHeight)
+//                        {
+//                            iframeid.height = iframeid.Document.body.scrollHeight;
+//                         }
+//                  }
+//         }
+//     }
+
+     var login = "{:url('index/index/index')}"
+</script>
+<script src="__STATIC__/js/personal_index.js"></script>
+</html>

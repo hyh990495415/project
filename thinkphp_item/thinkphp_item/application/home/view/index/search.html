@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>轻松卖闲置</title>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+    <script src="__STATIC__/js/jquery-1.12.3.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="__STATIC__/js/bootstrap.min.js"></script>
+</head>
+    <style>
+        .myNav{
+            background-color: #ffda44;
+        }
+        .likeImg{
+            height:50px;
+            width:50px;
+        }
+    </style>
+<body>
+    <div id="information">
+        <div class="nav navbar-default myNav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{$main}">闲趣</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNav" aria-expanded="false">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="row collapse navbar-collapse navbar-ex1-collapse " id="myNav">
+                    <ul class="nav navbar-nav text-center">
+                        <li><a href="{$main}">首页</a></li>
+                        <li>
+                            <a href="#">菜单二</a>
+                        </li>
+                        <li>
+                            <a href="#">菜单三</a>
+                        </li>
+                        <li>
+                            <a href="#">菜单四</a>
+                        </li>
+                        <li><a href="#">菜单五</a></li>
+                        <li>
+                            <form class="navbar-form" action="">
+                                <input type="text" class="btn" placeholder="" name="keyWord">
+                                <button type="submit" class="btn btn-default">搜索</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <!--<navigation></navigation>
+                <detailclass></detailclass>-->
+                <ol class="breadcrumb">
+                    <li><a href="{:url('home/Index/search',['clid'=>0])}">全部</a></li>
+                    {foreach $clid as $k=>$v}
+                    {if $k==count($clid)-1}
+                    <li class="active"><a href="{$v.url}">{$v.clname}</a></li>
+                    {else /}
+                    <li><a href="{$v.url}">{$v.clname}</a></li>
+                    {/if}
+                    {/foreach}
+                </ol>
+                {foreach $clid as $k=>$v}
+                {if $k==count($clid)-1}
+                <ul class="row list-unstyled">
+                    {foreach $class as $k=>$v}
+                    {if $v.fid!=0}
+                    <li class="col-lg-1 col-md-1 col-sm-1"><a href="{$v.url}">{$v.clname}</a></li>
+                    {/if}
+                    {/foreach}
+                </ul>
+                {/if}
+                {/foreach}
+            </div>
+            {if !empty($class)}
+            <ul class="row list-unstyled ">
+                {foreach $class as $k=>$v}
+                {if $v.fid==0}
+                <li class="col-lg-2 col-md-2 col-sm-2 col-xs-6 dropdown">
+                    <a href="{$v.url}">{$v.clname}</a>
+                    <button type="button" class="btn btn-xs dropdown-toggle" id="{$v.clid}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="{$v.clid}">
+                        {foreach $v['child'] as $val}
+                        <li><a href="{$val.url}">{$val.clname}</a></li>
+                        {/foreach}
+                    </ul>
+                </li>
+                {/if}
+                {/foreach}
+            </ul>
+            {/if}
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="row">
+                        <p><b>地区选择</b></p>
+                    </div>
+                    <div class="row">当前地区：<button type="button" class="btn btn-warning">{$location}</button></div>
+                    <div class="row" style="margin-bottom: 10px" id="myLocation">
+                        <form class="col=lg-6 form-inline">
+                            <div class="form-group">
+                                <label for="province">省份/直辖市</label>
+                                <select class="form-control"  @change="changeCity()" id="province" name="prvid" >
+                                    <option v-for="x in province" :value="x.prvid">{{x.province}}</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                        <form class="col=lg-6 form-inline">
+                            <div class="form-group">
+                                <label for="city">城市</label>
+                                <select class="form-control" id="city" name="ctid">
+                                    <option v-for="x in city" :value="x.ctid">{{x.city}}</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <!--<myproduct></myproduct>-->
+                    <div class="row masonry">
+                        {foreach $product as $val}
+                        <div class='col-lg-3 col-md-3 col-sm-4 col-xs-6 item'>
+                            <div class="thumbnail">
+                                <div class="media">
+                                    <div class="media-left media-middle">
+                                        <img class="lazy likeImg media-object" src="__STATIC__/image/load.gif" data-src="{$val.head}">
+                                        <!--<img  class="likeImg media-object" src="{$val.head}" alt="">-->
+                                    </div>
+                                    <div class="media-body"><a href="">{$val.account}</a></div>
+                                </div>
+                                <a href="{$val.url}">
+                                    <img class="lazy img-responsive" src="__STATIC__/image/load.gif" data-src="{$val.image}">
+                                     <!--<img class="img-responsive" src="{$val.image}" alt="">-->
+                                    <div class="caption">
+                                        <p>{$val.detail}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {/foreach}
+                    </div>
+                    {$page}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="__STATIC__/js/masonry.pkgd.min.js" ></script>
+<script type="text/javascript" src="__STATIC__/js/imagesloaded.pkgd.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="__STATIC__/js/jquery.lazyload.js"></script>
+<script>
+   /* $(function(){
+       $.ajax({
+            type:'get',
+            url:'{:url("home/Index/getLocation")}',
+            data:'',
+            dataType:'json',
+            success:function(res){
+                console.log(res);
+                var div=$('<div></div>');
+                for(var i=0;i<res.length;i++){
+                    var dropDiv=$('<div class="dropdown col-lg-6"></div>');
+                    var a=$('<a href="'+res[i].url+'">'+res[i].province+'</a>');
+                    var button=$('<button type="button" class="btn btn-xs dropdown-toggle" id="city'+i+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>')
+                    var ul=$('<div class="dropdown-menu" aria-labelledby="city'+i+'"></div>');
+                    for(var j=0;j<res[i].city.length;j++){
+                        var li=$('<span style="margin: 5px"><a href="'+res[i].city[j].url+'">'+res[i].city[j].city+'</a></span>');
+                        ul.append(li);
+                    }
+                    dropDiv.append(a,button,ul);
+                    /!*console.log(res[i].city)*!/
+                    div.append(dropDiv);
+                }
+                $("[data-toggle='popover']").popover({
+                    html : true,
+                    title: '选择地区',
+                    delay:{show:0, hide:0},
+                    content: div });
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });*/
+    var vue=new Vue({
+        el:'#myLocation',
+        data:{
+            prvid:1,
+            ctid:1,
+            city:[{city:"北京市",ctid:1,prvid:1}],
+            province:[]
+        },
+        created:function(){
+            this.getLocation();
+        },
+        methods: {
+            getLocation: function () {
+                var _this = this;
+                $.ajax({
+                    type: 'get',
+                    url: '{:url("home/Index/getLocation")}',
+                    data: '',
+                    dataType: 'json',
+                    success: function (res) {
+                        console.log(res);
+                        _this.province = res;
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+            },
+            changeCity:function(){
+                //var $prvid=$(event).value();
+                this.prvid=$('#province').val();
+                for(var i=0;i<this.province.length;i++){
+                    if(this.province[i].prvid==this.prvid){
+                        this.city=this.province[i].city;
+                    }
+                }
+
+            }
+        }
+    });
+   var vueObj=new Vue();
+/*    Vue.component('navigation',{
+       template:'<ol class="breadcrumb">\
+                   <li @click="selectProduct(0,0)"><a>全部</a></li>\
+                   <li v-for="x in navigation" @click="selectProduct(x.clid,x.fid)"><a>{{x.clname}}</a></li>\
+                 </ol>',
+       data:function(){
+           return {
+               navigation:[],
+               class:[]
+           }
+       },
+       created:function (){
+           var _this=this;
+           vueObj.$on('navigation',function(x){
+               _this.navigation= x.navigation;
+           });
+           vueObj.$on('class',function(x){
+               _this.class= x.class;
+           });
+            this.getNavigation();
+       },
+       methods:{
+           getNavigation:function(){
+               var _this = this;
+               $.ajax({
+                   type: 'get',
+                   url:'{:url("home/Index/getNavigation")}',
+                   data:'',
+                   dataType: 'json',
+                   success: function (res) {
+                       console.log(res);
+                       _this.navigation=res.navigation;
+                       vueObj.$emit('classDetail', {myclass:res.class});
+                   },
+                   error: function (res) {
+                       console.log(res);
+                   }
+               });
+           },
+           selectProduct:function (clid,fid){
+               var _this = this;
+               $.ajax({
+                   type: 'post',
+                   url:'{:url("home/Index/getProductByClass")}',
+                   data:{'clid':clid,'fid':fid},
+                   dataType: 'json',
+                   success: function (res) {
+                       console.log(res);
+                       vueObj.$emit('selectProduct', {product:res.product});
+                       _this.navigation=res.navigation;
+                       _this.class=res.class;
+                   },
+                   error: function (res) {
+                       console.log(res);
+                   }
+               });
+           }
+       }
+   });
+    Vue.component('detailclass',{
+        template:'<ul class="row list-unstyled">\
+                    <li class="col-lg-1 col-md-1 col-sm-1" v-for="y in myclass"><a :href="y.url">{{y.clname}}</a></li>\
+                 </ul>',
+        data:function(){
+            return {
+                myclass:[]
+            }
+        },
+        created:function(){
+            var _this=this;
+            vueObj.$on('classDetail',function(x){
+                _this.myclass= x.myclass;
+                console.log(_this.myclass);
+            });
+        },
+        methods:{
+
+        }
+    });
+   Vue.component('myproduct',{
+        template:'<div class="row masonry">\
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 item" v-for="x in product">\
+                        <div class="thumbnail">\
+                            <div class="media">\
+                               <div class="media-left media-middle">\
+                                   <img  class="likeImg media-object" :src="x.head" alt="">\
+                               </div>\
+                               <div class="media-body"><a href="">{{x.account}}</a></div>\
+                            </div>\
+                             <a :href="x.url">\
+                                <img class="img-responsive" :src="x.image" alt="">\
+                                <div class="caption">\
+                                   <p>{{x.detail}}</p>\
+                                </div>\
+                             </a>\
+                        </div>\
+                    </div>\
+                </div>',
+        data:function(){
+            return {
+                product:[],
+                page:0,
+                allRow:0
+            }
+        },
+        created:function(){
+            var _this=this;
+            vueObj.$on('selectProduct',function(x){
+                _this.product= x.product;
+                console.log(_this.product);
+            });
+            this.getProductByClass(1);
+        },
+        methods:{
+            getProductByClass:function(page){
+                var _this = this;
+                $.ajax({
+                    type: 'post',
+                    url:'{:url("home/Index/getProductByClass")}',
+                    data:{nowPage:page},
+                    dataType: 'json',
+                    success: function (res) {
+                        console.log(res);
+                        _this.product=res.product;
+                        vueObj.$emit('navigation', {product:res.navigation});
+                        vueObj.$emit('class', {product:res.class});
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+            }
+        }
+    });
+    var vue1=new Vue({
+       el:'#information'
+    });*/
+   setInterval(function(){
+       $('.masonry').imagesLoaded(function() {
+           $('.masonry').masonry({
+               itemSelector: '.item'
+           });
+       });
+   },500);
+</script>
+</html>

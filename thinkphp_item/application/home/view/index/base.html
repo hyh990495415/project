@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>简单的html5 File测试 for pic2base64</title>
+</head>
+
+<body>
+    <div>
+        <img style="width: 100px;height: 100px;" class="image" src="" alt="">
+        <img style="width: 100px;height: 100px;" class="image" src="" alt="">
+    </div>
+    <form id="form">
+        <input type="file" index="0" onchange="readFile(this)" class="input" />
+        <input type="file" index="1" onchange="readFile(this)" class="input" />
+        <input type="text" name="image1" class="result" />
+        <input type="text" name="image2" class="result" />
+        <input type="button" value="提交" id="submit">
+    </form>
+   <!--<img style="width: 100px;height: 100px;" class="preview" src="" alt="">
+   <img style="width: 100px;height: 100px;" class="preview" src="" alt="">
+   <form action="/12.27/public/index.php/home/index/upload" method="post">
+       <input type="file" name="myFile[]" id="1" onchange="imgPreview(this)" />
+       <input type="file" name="myFile[]" id="2" onchange="imgPreview(this)" />
+       <input type="submit" value="提交">
+   </form>-->
+<!--  <img style="width: 100px;height: 100px;" class="preview" src="" alt="">
+  <img style="width: 100px;height: 100px;" class="preview" src="" alt="">
+  <form action="/12.27/public/index.php/home/index/upload" enctype="multipart/form-data" method="post">
+      <input type="file" name="image[]" id="1" onchange="imgPreview(this)" /> <br>
+      <input type="file" name="image[]" id="2" onchange="imgPreview(this)"/> <br>
+      <input type="submit" value="上传" />
+  </form>-->
+</body>
+<script src="__STATIC__/js/jquery-1.12.3.min.js"></script>
+<!--<script type="text/javascript">
+    function imgPreview(fileDom){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+        //获取文件;
+        var id=parseInt(fileDom.getAttribute('id'));
+        console.log(id);
+        var file = fileDom.files[0];
+        console.log(file);
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementsByClassName("preview");
+            //图片路径设置为读取的图片
+            img[id-1].src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>-->
+<script>
+    function readFile(fileDom){
+        var img_area = document.getElementsByClassName("image");
+        var input = document.getElementsByClassName("input");
+        var result= document.getElementsByClassName("result");
+        var index=fileDom.getAttribute('index');
+        if ( typeof(FileReader) === 'undefined' ){
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            //把disabled属性设定为disabled。
+            input[index].setAttribute('disabled','disabled');
+
+        }else{
+            //addEventListener（指定事件名，指定要事件触发时执行的函数，事件句柄在冒泡阶段执行）
+            //input[index].addEventListener('change',readFile,false);
+            console.log(fileDom.files);
+            var file = fileDom.files[0];
+            //这里我们判断下类型如果不是图片就返回 去掉就可以上传任意文件
+            if(!/image\/\w+/.test(file.type)){
+                alert("请确保文件为图像类型");
+                return false;
+            }
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                result[index].value = this.result;
+                img_area[index].src=this.result;
+            }
+        }
+    }
+    $('#submit').click(function(){
+        var image1=$('.result').eq(0).val();
+        var image2=$('.result').eq(1).val();
+        $.ajax({
+            type:'post',
+            url:"/thinkphp_item/public/index.php/home/index/changeBase64",
+            data:{image1:encodeURIComponent(image1),image2:encodeURIComponent(image2)},
+            dataType:'json',
+            success:function(res){
+                console.log(res);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });
+</script>
+</html>

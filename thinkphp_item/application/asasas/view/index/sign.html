@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/css/animate.css">
+    <link rel="stylesheet" href="__STATIC__/css/style.css">
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap_button.css">
+
+    <!-- Modernizr JS -->
+    <script src="__STATIC__/js/modernizr-2.6.2.min.js"></script>
+
+    <script src="__STATIC__/js/respond.min.js"></script>
+    <!--angular JS-->
+    <script src="__STATIC__/js/angular.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form  class="fh5co-form animate-box" data-animate-effect="fadeIn" ng-app="myArr" ng-controller="myCtrl" name="myForm">
+                <h2>注册账户</h2>
+                <div class="form-group">
+                    <div class="alert alert-success" role="alert">请填写完毕，在进行注册</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username"  ng-model="username"
+                           placeholder="请输入用户名" required ng-minlength="6" ng-maxlength="16"
+                           ng-pattern="/^[\u4e00-\u9fa5\w][0-9a-zA-Z]+$/" ng-blur="testUser()">
+                    <span style="color:red" ng-show="myForm.username.$dirty&&myForm.username.$error.required">用户不能为空</span>
+                    <span style="color:red" ng-show="myForm.username.$error.pattern">输入格式有误，必须字母、数字下滑下组成</span>
+                    <span style="color:red" ng-show="myForm.username.$error.minlength">输入不能小于6位</span>
+                    <span style="color:red" ng-show="myForm.username.$error.maxlength">输入不能大于16位</span>
+                    <span style="color: red" ng-show="myForm.username.$valid">
+                        <span ng-show="erName">用户已存在</span>
+                        <!--<span style="color: green;" ng-show="">验证通过</span>-->
+                    </span>
+                    <span style="color: green;" ng-show="suName&&myForm.username.$dirty&&myForm.username.$valid">验证通过</span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="upwd"  ng-model="upwd"
+                           placeholder="输入密码密码"
+                           required  ng-minlength="6" ng-maxlength="16" ng-pattern="/^[0-9a-zA-Z]+$/">
+                    <span style="color:red;" ng-show="myForm.upwd.$dirty&&myForm.upwd.$error.required">密码不能为空</span>
+                    <span style="color: red" ng-show="myForm.upwd.$error.pattern">输入格式有误，必须字母、数字下滑下组成</span>
+                    <span style="color:red" ng-show="myForm.upwd.$error.minlength">输入不能小于6位</span>
+                    <span style="color:red" ng-show="myForm.upwd.$error.maxlength">输入不能大于16位</span>
+                    <span style="color: green;" ng-show="myForm.upwd.$dirty&&myForm.upwd.$valid">验证通过</span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="re_password" ng-model="re_password"
+                           id="re-password"
+                           placeholder="再次输入密码" required>
+                    <span style="color:red;" ng-show="myForm.re_password.$dirty&&myForm.re_password.$error.required">密码不能为空</span>
+                    <span style="color: red" ng-show="myForm.re_password.$valid">
+                        <span ng-show="re_password!=upwd">两次密码输入不一致</span>
+                        <span style="color: green;" ng-show="re_password==upwd">验证通过</span>
+                    </span>
+
+                </div>
+                <!--省份-->
+                <div class="form-group">
+                    <select name="province_id" id="province_id" ng-model="province" ng-change="myProvince()"
+                            required ng-init="province='0'">
+                        <option value="0" >请选择省份</option>
+                        {volist name="province" id="province"}
+                        <option value="{$province.prvid}" >
+                            {$province.province}
+                        </option>
+                        {/volist}
+                    </select>
+                    <!--市区-->
+                    <select name="city_id" id="city_id" ng-model="city" ng-change="myCity()" required
+                            ng-init="city='0'" >
+                     <option value="0">请选择市区</option>
+                    <option ng-repeat="i in mycity" value="{{i.ctid}}">{{i.city}}</option>
+                    </select>
+                    <!--辖区-->
+                    <select name="area_id" id="area_id" ng-model="area" required ng-init="area='0'">
+                        <option value="0" >请选择辖区</option>
+                        <option ng-repeat="i in myarea" value="{{i.aid}}">{{i.aname}}</option>
+                    </select>
+                    <!--性别-->
+                </div>
+                手机号
+                <div class="form-group">
+                    <input type="text" class="form-control"  placeholder="手机号码" autocomplete="off"
+                           ng-model="phone" name="phone" required ng-minlength="11" ng-maxlength="11"
+                           ng-pattern="/^1[3|5|8][0-9]\d{4,8}$/" >
+                    <span style="color:red" ng-show="myForm.phone.$dirty&&myForm.phone.$error.required">手机号不能为空</span>
+                    <span style="color:red" ng-show="myForm.phone.$error.pattern">输入格式有误</span>
+                    <span style="color:red" ng-show="myForm.phone.$error.minlength">输入不能小于11位</span>
+                    <span style="color:red" ng-show="myForm.phone.$error.maxlength">输入不能大于11位</span>
+                </div>
+                <!--发送验证码-->
+                <div class="form-group">
+                    <input  type="text" class="form-control"  placeholder="验证码" ng-model="code" name="code" >
+                    <input  class="button button-rounded button-small" type="button" value="获取验证码" name="required_code"
+                            ng-click="required_code($event)" ng-disabled="!phone" >
+                </div>
+                <div class="form-group">
+                    <p>已经注册? <a href="{:url('index/Index/index')}">立即登录</a></p>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="立即注册" class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="retrieve()">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 60px; clear: both;">
+        <div class="col-md-12 text-center"><p><small>&copy; All Rights Reserved. More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small></p></div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="__STATIC__/js/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="__STATIC__/js/bootstrap.min.js"></script>
+<!-- Placeholder -->
+<script src="__STATIC__/js/jquery.placeholder.min.js"></script>
+<!-- Waypoints -->
+<script src="__STATIC__/js/jquery.waypoints.min.js"></script>
+<!-- Main JS -->
+<script src="__STATIC__/js/main.js"></script>
+<!--注册验证地址、省、市、注册用户地址、用户查重地址-->
+<script>
+    var sign_up_codeUrl = "{:url('index/Index/sign_up_code')}";
+    var provinceUrl     = "{:url('index/Index/province')}";
+    var cityUrl         = "{:url('index/Index/city')}";
+    var registerUrl     = "{:url('index/Index/register')}";
+    var testUserUrl     = "{:url('index/Index/testUser')}";
+</script>
+<!--注册 JS-->
+<script src="__STATIC__/js/sign-up.js"></script>
+
+</body>
+</html>

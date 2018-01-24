@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <!--<script src="__STATIC__/js/angular.js"></script>-->
+
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <!--cookie JS-->
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <!--个人设置-->
+    <link rel="stylesheet" href="__STATIC__/css/personal_center.css">
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap_button.css">
+    <!--<script src="__STATIC__/js/verify.js"></script>-->
+    <style>
+
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        .flew1{
+            display: flex;
+            /*-webkit-flex 为了兼容性*/
+            display: -webkit-flex;
+            /*flex-direction:row;*/
+            justify-content:  space-between;
+        }
+
+        .flew2{
+            flex: 1;
+        }
+
+        .flew3{
+            display: flex;
+            flex-wrap: wrap;
+           justify-content: space-around;
+        }
+        @media (min-width: 768px) {
+
+
+        }
+        @media(max-width:768px ){
+        }
+    </style>
+</head>
+<body >
+
+    <div id="messageData">
+        <myhead></myhead>
+
+
+    </div>
+
+</body>
+<script>
+    var vueObj=new Vue();
+    Vue.component('myhead',{
+            template:'<div class="container">\
+                       <mybox :child-msg="message"></mybox> \
+                       <div> \
+                           <div style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0">\
+                                <h3 style="margin: 10px 0 10px 0">个人信息</h3>\
+                             </div>\
+                             <div class="flew1" >\
+                                 <div class="flew2"><img class="img-reponsive " style="width: 100px;height: 100px;border-radius: 50%" :src="message.nowhead" alt="">&emsp;<span class="" style="font-size: 24px">{{message.nowuname}}</span></div>\
+                                 <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default" data-toggle="modal" data-target="#nickname">更改昵称</button></div>\
+                             </div>\
+                         </div>\
+                         <div>\
+                            <div class="flew1" style="border-bottom: 1px solid lightgrey;margin: 50px 0 10px 0;border-top: 1px solid lightgrey" v-if="message.nowidentification ==  1">\
+                                <div class="flew2"><li class="img" style="background-position:-209px 0;float:left;"></li><h4 style="display:inline-block;line-height: 40px">实名认证<span style="color: red;font-size: 12px">未认证</span></h4><p style="margin-left: 20px;color: lightgrey">实名认证，提升个人账户安全</p></div>\
+                                <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default" data-toggle="modal" data-target="">立即认证</button></div>\
+                            </div>\
+                            <div class="flew1" style="border-bottom: 1px solid lightgrey;margin: 50px 0 10px 0;border-top: 1px solid lightgrey" v-if="message.nowidentification == 0">\
+                                <div class="flew2"><li class="img" style="background-position:-209px 0;float:left;"></li><h4 style="display:inline-block;line-height: 40px">实名认证<span style="color: red;font-size: 12px">已认证</span></h4><p style="margin-left: 20px;color: lightgrey">实名认证，提升个人账户安全</p></div>\
+                                <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default" data-toggle="model" data-target="#qqi">更改认证</button></div>\
+                            </div>\
+                            <div class="flew1" style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0;">\
+                                <div class="flew2"><li class="img" style="background-position:-235px 0;float:left;"></li><h4 style="display:inline-block;line-height: 40px">手机号<span style="color: red;font-size: 12px">已绑定</span>(<span style="color:red">{{message.nowcell}}</span>)</h4><p style="margin-left: 20px;color: lightgrey">手机号用于登录账号，重置密码或其它安全验证</p></div>\
+                                <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default" data-toggle="modal" data-target="#myphone">更改号码</button></div>\
+                            </div>\
+                            <div class="flew1" style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0;">\
+                                <div class="flew2"><li class="img" style="background-position:-263px 0;float:left;"></li><h4 style="display:inline-block;line-height: 40px">登录密码</h4><p style="margin-left: 20px;color: lightgrey">用于保护账号信息和登录安全</p></div>\
+                                <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default"  data-toggle="modal" data-target="#mychange">更换密码</button></div>\
+                            </div>\
+                            <div class="flew1" style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0;">\
+                                <div class="flew2"><li class="img" style="background-position:-178px 0;float:left;"></li><h4 style="display:inline-block;line-height: 40px">收货地址</h4><p style="margin-left: 20px;color: lightgrey">用于用户收货方便</p></div>\
+                                <div class="flew2" style="text-align: right;align-self: center"><button class="btn btn-default" @click="address()">更改地址</button></div>\
+                            </div>\
+                         </div>\
+                      </div>',
+            data:function () {
+                return{
+                    message:[]
+                }
+            },
+            created:function () {
+                this.init();
+            },
+            methods:{
+//                默认
+                init:function () {
+//                console.log('123');
+                    var _this = this ;
+                    $.ajax({
+                        type:'post',
+                        data:{'user':$.cookie('user')},
+                        url:"{:url('index/personal/getMessage')}",
+                        dataType:'json',
+                        success:function (res) {
+                            _this.message =res;
+//                            console.log(res);
+                        },error:function (res){
+
+                        }
+
+                    })
+                },
+//             收货地址显示
+                address:function () {
+                  window.location.href="{:url('index/Personal/address_show')}";
+                }
+            }
+        }
+    )
+
+    var vueObj=new Vue();
+    Vue.component('mybox',{
+        template:'\
+<div>\
+     <div class="modal fade" id="nickname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">\
+         <div class="modal-dialog" style="width: 30%">\
+             <div class="modal-content">\
+                 <div class="modal-header">\
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                     <h4 class="modal-title" id="myModalLabel">输入新昵称</h4>\
+                 </div>\
+                 <div class="form-group flew3 ">\
+                     <input  type="text" class="form-control " id="name"  style="width: 40%" placeholder="新昵称" >\
+                 </div>\
+                 <div class="modal-footer">\
+                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+                     <button type="button" class="btn btn-primary" v-on:click="name">提交更改</button>\
+                 </div>\
+             </div>\
+         </div>\
+     </div>\
+     <div class="modal fade" id="myphone" tabindex="-1" role="dialog"  aria-hidden="true">\
+      <div class="modal-dialog">\
+          <div class="modal-content">\
+              <div class="modal-header">\
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                  <h4 class="modal-title" >解除绑定</h4>\
+              </div>\
+              <div class="modal-body">点击发送短信按钮，将会发送一条有验证码的短信至手机<span style="color:red">{{childMsg.nowcell}}</span></div>\
+              验证码\
+                  <input  type="text" class="form-control"  id="code" style="width: 40%" placeholder="输入验证码">\
+                  <input class="button button-rounded button-small "  type="button" value="获取验证码"\
+                         @click="required_code($event)" >\
+              <div class="modal-footer">\
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+                  <button type="button" class="btn btn-primary" @click="unbundling()">提交更改</button>\
+              </div>\
+          </div>\
+      </div>\
+  </div>\
+  <div class="modal fade" id="mybinding" tabindex="-1" role="dialog"  aria-hidden="true">\
+         <div class="modal-dialog">\
+             <div class="modal-content">\
+                 <div class="modal-header">\
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                     <h4 class="modal-title" >绑定号码</h4>\
+                 </div>\
+                 <div class="modal-body">点击发送短信按钮，将会发送一条有验证码的短信至手机</div>\
+                 手机号\
+                 <input type="text" class="form-control" id="phone" style="width: 40%" placeholder="手机号">\
+                 验证码\
+                 <input  type="text" class="form-control"  id="binding_code" style="width: 40%" placeholder="输入验证码">\
+                 <input class="button button-rounded button-small "  type="button" value="获取验证码"\
+                                    @click="binding_code($event)" >\
+                 <div class="modal-footer">\
+                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+                     <button type="button" class="btn btn-primary" @click="binding()">提交更改</button>\
+                 </div>\
+             </div>\
+         </div>\
+  </div>\
+  <div class="modal fade" id="mychange" tabindex="-1" role="dialog"  aria-hidden="true">\
+        <div class="modal-dialog">\
+        <div class="modal-content">\
+        <div class="modal-header">\
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+         <h4 class="modal-title" >更改密码</h4>\
+        </div>\
+        <div class="modal-body">点击发送短信按钮，将会发送一条有验证码的短信至手机<span style="color:red">{{childMsg.nowcell}}</span></div>\
+         验证码\
+        <input  type="text" class="form-control"  id="chang_code" style="width:40%" placeholder="输入验证码">\
+        <input class="button button-rounded button-small" type="button" value="获取验证码" @click="chang_code($event)">\
+        <div class="modal-footer">\
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+        <button type="button" class="btn btn-primary" @click="judge_code()">提交更改</button>\
+        </div>\
+        </div>\
+        </div>\
+   </div>\
+   <div class="modal fade" id="set_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">\
+        <div class="modal-dialog" style="width: 50%">\
+            <div class="modal-content">\
+                <div class="modal-header">\
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                <h4 class="modal-title" id="myModalLabel">设置新密码</h4>\
+                </div>\
+                 新密码\
+                <input  type="password" class="form-control"  id="new_password" style="width: 40%" placeholder="输入新密码">\
+                再输入新密码\
+                <input  type="password" class="form-control"  id="stay_password" style="width: 40%" placeholder="再次输入新密码">\
+                <div class="modal-footer">\
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+                <button type="button" class="btn btn-primary" @click="submit_password()">提交更改</button>\
+                </div>\
+            </div>\
+        </div>\
+   </div>\
+</div>',
+        data:function () {
+           return {
+               flag:false
+           }
+        },
+        props: ['childMsg'],
+        methods:{
+//            修改昵称
+            name:function () {
+                $name = $("#name").val();
+
+                $.ajax({
+                    type:'post',
+                    data:{'name':$name},
+                    url:"{:url('index/personal/nickname')}",
+                    dataType:'json',
+                    success:function (res) {
+
+                        if(res.code==1001)
+                        {
+                            alert(res.msg);
+                            parent.location.reload();
+                        }else
+                        {
+                            alert(res.msg);
+                        }
+                    },error:function (res) {
+
+                    }
+
+                })
+            },
+//          获取解绑手机的验证码
+            required_code:function (myevent) {
+
+                    //验证码按钮事件
+
+                    $(myevent.target).attr("disabled","disabled");
+                    var time = 60;
+                    var set=setInterval(function(){
+                        $(myevent.target).val(--time);
+                    }, 1000);
+                    setTimeout(function(){
+                        $(myevent.target).attr("disabled",false).val("获取验证码");
+                        clearInterval(set);
+                    }, 60000);
+
+                    $.ajax({
+                        type:'post',
+                        data:{},
+                        url:"{:url('index/personal/required_code')}",
+                        dataType:'text',
+                        success:function (res) {
+                            console.log(res)
+                        },error:function (res) {
+                            //                            console.log(res)
+                        }
+                    })
+            },
+//          发送解绑请求
+            unbundling:function () {
+                var _this=this;
+                //解绑短信验证码
+                $code = $("#code").val();
+                if($code=="")
+                {
+                    alert('验证码请填写完毕');
+                }else
+                {
+                    $.ajax({
+                        type:'post',
+                        data:{'code':$code},
+                        url:"{:url('index/personal/unbundling')}",
+                        dataType:'json',
+                        success:function (res) {
+                            // 成功解绑
+                            if(res.code ==1001)
+                            {
+                                alert(res.msg);
+                                // 解绑框消失
+                                $('#myphone').modal('hide');
+                                //绑定框显示
+                                $('#myphone').on('hidden.bs.modal', function () {
+                                    $('#mybinding').modal('show');
+                                })
+
+                                /*$('#myphone').modal('hide');
+                                $('#myphone').on('hide.bs.modal', function () {
+                                    $('#mybinding').modal('show');});*/
+                                /* //解绑手机框消失
+                                 $('#myphone').modal('hide');
+                                 //绑定手机框显示
+                                     $('#myphone').on('hidden.bs.modal', function () {
+                                         $('#mybinding').model('show');})
+ //                                $(function () { $('#myphone').on('hide.bs.modal', function () {
+ //                                    alert('嘿，我听说您喜欢模态框...');})
+ //                                });*/
+                            }else
+                            {
+                                alert(res.msg);
+                            }
+                        },error:function (res) {
+//                            console.log(res)
+                        }
+
+                    })
+                }
+            },
+//         发送给绑定手机号验证码
+            binding_code:function (myevent) {
+                $code  = $("#binding_code").val();
+      //        判断手机号是否输入
+                $phone = $("#phone").val();
+
+                if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($phone)))
+                {
+                    alert('手机号码不合法,请输入完毕')
+                }else {
+                    $(myevent.target).attr("disabled", "disabled");
+                    var time = 60;
+                    var set = setInterval(function () {
+                        $(myevent.target).val(--time);
+                    }, 1000);
+                    setTimeout(function () {
+                        $(myevent.target).attr("disabled", false).val("获取验证码");
+                        clearInterval(set);
+                    }, 60000);
+
+                    $.ajax({
+                        type:'post',
+                        url:"{:url('index/Personal/binding_code')}",
+                        data:{'phone':$phone,'code':$code},
+                        dataType:'json',
+                        success:function (res) {
+                            if (res.code==1001)
+                            {
+                                alert(res.msg);
+                            }
+                        },error:function (res) {
+
+                        }
+                    })
+
+                }
+           },
+//         绑定新号码
+            binding:function (myevent) {
+                $code  = $("#binding_code").val();
+                //        判断手机号是否输入
+                $phone = $("#phone").val();
+
+                if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($phone)))
+                {
+                    alert('手机号码不合法,请输入完毕')
+                }else if($code == "")
+                {
+                    alert('验证码不能为空')
+                }
+                else {
+
+                    $.ajax({
+                        type:'post',
+                        url:"{:url('index/Personal/binding')}",
+                        data:{'phone':$phone,'code':$code},
+                        dataType:'json',
+                        success:function (res) {
+                            if(res.code == 1001)
+                            {
+                                alert(res.msg);
+                                window.location.reload();
+                            }else
+                            {
+                                alert(res.msg)
+                            }
+//                            console.log(res)
+                        },error:function (res) {
+
+                        }
+                    })
+
+                }
+            },
+//         获取更改密码验证码
+            chang_code:function(myevent) {
+                $(myevent.target).attr("disabled", "disabled");
+                var time = 60;
+                var set = setInterval(function () {
+                    $(myevent.target).val(--time);
+                }, 1000);
+                setTimeout(function () {
+                    $(myevent.target).attr("disabled", false).val("获取验证码");
+                    clearInterval(set);
+                }, 60000);
+
+
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/Personal/password_code')}",
+                    data:{},
+                    dataType:'text',
+                    success:function(res)
+                    {
+//                     console.log(res)
+                    },error:function (res) {
+
+                    }
+
+                })
+            },
+//         判断更改密码验证码是否一致
+            judge_code:function() {
+                $code  = $("#chang_code").val();
+                if($code == "")
+                {
+                    alert("验证码不能为空")
+                }else
+                {
+                    $.ajax({
+                        type:'post',
+                        url:"{:url('index/Personal/judge_code')}",
+                        data:{'code':$code},
+                        dataType:'json',
+                        success:function (res) {
+//                            console.log(res)
+                            if (res.code==1001)
+                            {
+                                alert(res.msg);
+                                $('#mychange').modal('hide');
+
+                                $('#mychange').on('hidden.bs.modal', function () {
+                                    $('#set_password').modal('show');
+                                })
+                            }else
+                            {
+                                alert(res.msg);
+                            }
+                        },error:function (res)
+                        {
+
+                        }
+                    })
+                }
+            },
+//           输入密码是否合法
+            submit_password:function () {
+                //新密码
+                $new_password = $("#new_password").val();
+                //再次输入的密码
+                $stay_password = $("#stay_password").val();
+
+//                正则验证需要满足1、密码必须由数字、字符、特殊字符三种中的两种组成；
+//                                2、密码长度不能少于8个字符；
+                if ($new_password !="")
+                {
+                    if(/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{6,}/.test($new_password)){
+
+                        if($new_password == $stay_password && $stay_password !="")
+                        {
+                            $.ajax({
+                                type:'post',
+                                url:"{:url('index/Personal/new_password')}",
+                                data:{'password':$new_password},
+                                dataType:'json',
+                                success:function (res) {
+//                                    console.log(res)
+                                    if(res.code==1001)
+                                    {
+                                        alert(res.msg);
+                                        window.location.reload();
+                                    }
+                                },error:function (res) {
+                                    alert(res.msg);
+                                }
+                            })
+                        }else
+                        {
+                            alert('两组密码不相同，请重新输入');
+                        }
+                    }else
+                    {
+                        alert('密码必须由数字、字符、特殊字符三种中的两种组成，且不能小于6位数');
+                    }
+                }else
+                {
+                    alert('密码不能为空');
+                }
+
+
+            }
+        }
+    })
+    new Vue({
+        el:'#box'
+    })
+
+
+    new Vue({
+        el:'#messageData'
+    });
+</script>
+<script>
+
+</script>
+</html>

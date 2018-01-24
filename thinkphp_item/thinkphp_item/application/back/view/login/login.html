@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闲趣 - 后台登录</title>
+    <link rel="stylesheet" href="__STATIC__/css/layui.css">
+</head>
+<style>
+    .formbox{
+        padding: 30px;
+        padding-left: 0;
+    }
+    .box{
+        position:absolute;
+        left:40%;
+        top:30%;
+        width: 450px;
+        color: white;
+    }
+</style>
+<body class="layui-bg-black">
+<!--<div class="layui-row layui-col-space5">
+    <div class="layui-col-md4">
+
+    </div>
+    <div class="layui-col-md4 layui-bg-green">
+        <fieldset class="layui-elem-field"> &lt;!&ndash; class="layui-elem-field"&ndash;&gt;
+            <legend><a style="color: white">闲趣</a></legend>
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">帐号</label>
+                    <div class="layui-input-block" style="width: 40%">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block" style="width: 40%">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-block" style="width: 40%">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    <div class="layui-col-md4">
+
+    </div>
+</div>-->
+
+    <div class="box">
+        <fieldset class="layui-elem-field">
+            <legend>闲趣</legend>
+            <div class="formbox">
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">帐号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="acc" required  lay-verify="required" placeholder="请输入帐号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="pwd" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">验证码</label>
+                        <div class="layui-input-block" >
+                            <input style="float: left;width: 55%" type="text" name="yzm" required maxlength="4" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                            <img style="float: right;height: 38px" src="{:captcha_src()}" onclick="this.src=this.src+'?'+Math.random()" alt="captcha" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+    </div>
+
+
+</body>
+<script src="__STATIC__/js/layui.js"></script>
+</html>

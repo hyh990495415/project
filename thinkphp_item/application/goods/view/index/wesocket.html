@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    //连接websocket
+
+    var ws = new WebSocket("ws://127.0.0.1:8000");
+
+    //成功连接websoc的时候
+
+    ws.onopen = function(){}
+
+    //成功获取服务端输出的消息
+
+    ws.onmessage = function(e){}
+
+    //连接错误的时候
+    ws.onerror = function(){}
+
+    //向服务端发送数据
+
+    ws.send();
+</script>
+</html>

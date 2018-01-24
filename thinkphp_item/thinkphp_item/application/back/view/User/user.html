@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户</title>
+    <link rel="stylesheet" href="__STATIC__/css/layui.css">
+    <script src="__STATIC__/js/jquery-3.2.1.js"></script>
+</head>
+<body>
+<table class="layui-hide" id="cgoods" lay-filter="demo"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn layui-btn-sm" lay-event="">查看</a>
+        <a class="layui-btn layui-btn-sm" lay-event="">锁定</a>
+        <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="">删除</a>
+</script>
+</body>
+<script>
+    var listurl ='{:url("back/User/userList")}';
+</script>
+<script src="__STATIC__/layui.js"></script>
+<script src="__STATIC__/js/user_all.js "></script>
+</html>

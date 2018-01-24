@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <script src="__STATIC__/js/angular.js"></script>
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <!--jquery.cookie-->
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <style>
+
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        .flew1{
+            display: flex;
+            /*-webkit-flex 为了兼容性*/
+            display: -webkit-flex;
+            /*flex-direction:row;*/
+            justify-content:  space-between;
+        }
+        .flew2{
+            flex: 1;
+            align-self: center;
+            font-size: 17px;
+            font-family: 微软雅黑;
+            text-align: center
+        }
+        .flew3{
+            flex: 1;
+            align-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .flew4{
+            flex: 1;
+            align-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .myli
+        {
+            display: inline;
+        }
+        @media (min-width: 768px) {
+
+
+        }
+        @media(max-width:768px ){
+        }
+    </style>
+</head>
+<body style="background: white">
+
+<div id="addressData">
+    <myhead></myhead>
+    <modality></modality>
+
+
+</div>
+</body>
+
+<script>
+    var vueObj=new Vue();
+    Vue.component('myhead',{
+            template:'<div class="container">\
+                           <div style="border-bottom: 1px solid lightgrey;margin: 10px 0 10px 0">\
+                                <div class="flew1">\
+                                    <button class=" btn btn-default" @click="myreturn()">返回</button>\
+                                    <h3 class="flew2" style="margin: 10px 0 10px 0">管理收货地址</h3>\
+                                    <div class="flew2"></div>\
+                                    <div class="flew2">\
+                                    </div><button class="btn btn-default flew2" style="width:220px" data-toggle="modal" data-target="#new_address">新增地址</button>\
+                               </div>\
+                           </div>\
+                           <div>\
+                               <ul class="flew1" style="height: 30px;background-color: #ffda44;">\
+                                     <li class="myli flew2">提示</li>\
+                                   <li class="myli flew2">收货人</li>\
+                                   <li class="myli flew2">手机号码</li>\
+                                   <li class="myli flew2" >收获地址</li>\
+                                   <li class="myli flew2" >修改</li>\
+                                   <li class="myli flew2" >删除</li>\
+                               </ul>\
+                               <ul v-for="item in message"  class="flew1" style="height: 50px;border-bottom: 1px solid lightgrey;">\
+                                    <li class="myli flew2" v-if="item.aflag==1">默认</li>\
+                                    <li class="myli flew2" v-else="item.aflag==0"></li>\
+                                     <li class="myli flew2">{{item.receive}}</li>\
+                                     <li class="myli flew2">{{item.cell}}</li>\
+                                     <li class="myli flew2">{{item.address}}</li>\
+                                     <li  class="myli flew2"> <button  class="btn btn-default" data-toggle="modal"  @click="modify_add(item.adid)">修改</button></li>\
+                                     <li  class="myli flew2"> <button class="btn btn-default"  @click="delete_add(item.adid)">删除</button>  \
+                                     </li>\
+                               </ul>\
+                               <ul class="pager" >\
+                                    <li><a href="#" @click="upperPage()">上一页</a></li>\
+                                    <li v-for="item in tatalpages">\
+                                    <a @click="mypage(item)">{{item}}</a>\
+                                    </li>\
+                                    <li><a href="#" @click="nextPage()">下一页</a></li>\
+                              </ul>\
+                           </div>\
+                      </div>',
+            data:function () {
+                return{
+                    message:[], //收货地址数组
+                    nowpage:1,     //当前页
+                    tatalpages:1    //总页数
+                }
+            },
+            created:function () {
+                this.init(this.nowpage);
+            },
+            methods:{
+                //默认向服务器获取数据
+                init:function (nowpage) {
+                    var  _this = this;
+                    $.ajax({
+                        type:'post',
+                        url:" {:url('index/Personal/address')}",
+                        data:{'nowpage':nowpage,'amount':7},
+                        dataType:'json',
+                        success:function (res) {
+                            _this.tatalpages = res.tatalpages;//总页
+                            _this.nowpage = JSON.parse(res.nowpage);//当前页
+                            _this.message = res.message;
+                            console.log(res.message)
+                        },error:function (res) {
+
+                        }
+                    })
+                },
+                //上一页
+                upperPage:function () {
+                    var nowpage=parseInt(this.nowpage);
+                    if (nowpage>1)
+                    {
+                        this.nowpage-=1;
+                        nowpage-=1;
+                    }else
+                    {
+                        nowpage=1;
+                    }
+                    this.init(nowpage);
+                },
+                //下一页
+                nextPage:function () {
+                    var nowpage =  this.nowpage;
+
+                    if(nowpage+1<parseInt(this.tatalpages))
+                    {
+                        this.nowpage =  nowpage+=1;
+                    }else
+                    {
+                        this.nowpage=parseInt(this.tatalpages);
+                        nowpage=parseInt(this.tatalpages);
+                    }
+                    this.init(nowpage);
+                },
+                //点击当前页
+                mypage:function (res) {
+                    this.init(res);
+                },
+                //修改
+                modify_add:function (item) {
+
+                    //获取对应的修改的地址id
+//                    console.log(item)
+                   $.ajax({
+                       type:'post',
+                       url:"{:url('index/Personal/modify_add')}",
+                       data:{'adid':item},
+                       dataType:'json',
+                       success:function (res) {
+//                           console.log(res);
+                           $("#modify_consignee").val(res.data['receive']);
+                           $("#modify_phone").val(res.data['cell']);
+                           $("#modify_detailed").val(res.data['address']);
+
+                           //省
+                           $("#modify_province").children().eq(0).val(res.province['prvid']);
+                           $("#modify_province").children().eq(0).html(res.province['province']);
+
+                           //市
+                           $("#modify_city").children().eq(0).val(res.city['ctid']);
+                           $("#modify_city").children().eq(0).html(res.city['city']);
+
+                           //区
+                          $("#modify_area") .children().eq(0).val(res.area['aid']);
+                          $("#modify_area") .children().eq(0).html(res.area['aname']);
+
+                           $('#modify_address').modal('show');
+                       },error:function () {
+
+                       }
+                   })
+
+                },
+                //删除
+                delete_add:function (item) {
+                    $.ajax({
+                        type:'post',
+                        url:"{:url('index/Personal/delete_add')}",
+                        data:{adid:item},
+                        dataType:'json',
+                        success:function (res) {
+                           if (res.code==1001)
+                           {
+                               alert(res.msg);
+                               window.location.reload();
+                           }else
+                           {
+                               alert(res.msg)
+                           }
+                        },error:function (res)
+                        {
+
+                        }
+                    })
+                },
+                //返回到个人中心
+                myreturn:function () {
+                    window.location.href="{:url('index/Personal/message')}"
+                }
+            }
+        }
+    )
+
+    new Vue();
+    Vue.component('modality',{
+        template:'<div>\
+        <div class="modal fade" id="new_address" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">\
+               <div class="modal-dialog" style="width: 50%">\
+                   <div class="modal-content">\
+                       <div class="modal-header">\
+                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+                           <h4 class="modal-title" id="myModalLabel">增加新地址</h4>\
+                       </div>\
+                       <div class="flew1" style="margin: 10px 0 10px 0">\
+                          <input  type="text" class="form-control flew3"  id="consignee" style="width: 40%" placeholder="收货人">\
+                          <div class="flew3"></div>\
+                          <input  type="text" class="form-control flew3"  id="phone" style="width: 40%" placeholder="收货人电话">\
+                          <div class="flew3"></div>\
+                       </div >\
+                       <div class="flew4" style="margin: 10px 0 10px 0">\
+                           <select name="province_id" id="province_id"  @change="myProvince()" >\
+                            <option value="0" >请选择省份</option>\
+                            <option v-for="i in myprovince" :value="i.prvid">{{i.province}}</option>\
+                        </select>\
+                        <span>&emsp;</span>\
+                        <select name="city_id" id="city_id"  @change="myCity()"  >\
+                             <option value="0">请选择市区</option>\
+                             <option v-for="i in mycity" :value="i.ctid">{{i.city}}</option>\
+                        </select>\
+                        <span>&emsp;</span>\
+                        <select name="area_id" id="area_id" >\
+                            <option value="0" >请选择辖区</option>\
+                            <option v-for="i in myarea" :value="i.aid">{{i.aname}}</option>\
+                        </select>\
+                       </div>\
+                       <div class="flew1" style="margin: 10px 0 10px 0">\
+                       <input type="text" class="form-control " placeholder="详细地址" id="detailed">\
+                       </div>\
+                       <div class="modal-footer">\
+                           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+                           <button type="button" class="btn btn-primary" @click="submit_address()">提交更改</button>\
+                       </div>\
+                   </div>\
+               </div>\
+           </div>\
+          <div class="modal fade" id="modify_address" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">\
+            <div class="modal-dialog" style="width: 50%">\
+            <div class="modal-content">\
+            <div class="modal-header">\
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+        <h4 class="modal-title" id="myModalLabel">修改收货地址</h4>\
+            </div>\
+            <div class="flew1" style="margin: 10px 0 10px 0">\
+            <input  type="text" class="form-control flew3"  id="modify_consignee" style="width: 40%" placeholder="收货人">\
+            <div class="flew3"></div>\
+            <input  type="text" class="form-control flew3"  id="modify_phone" style="width: 40%" placeholder="收货人电话">\
+            <div class="flew3"></div>\
+            </div >\
+            <div class="flew4" style="margin: 10px 0 10px 0">\
+            <select name="" id="modify_province"  @change="province()" >\
+            <option value="0" >请选择省份</option>\
+            <option v-for="i in myprovince" :value="i.prvid">{{i.province}}</option>\
+        </select>\
+        <span>&emsp;</span>\
+        <select name="city_id" id="modify_city"  @change="city()"  >\
+            <option value="0">请选择市区</option>\
+            <option v-for="i in mycity" :value="i.ctid">{{i.city}}</option>\
+        </select>\
+        <span>&emsp;</span>\
+        <select name="area_id" id="modify_area" >\
+            <option value="0" >请选择辖区</option>\
+            <option v-for="i in myarea" :value="i.aid">{{i.aname}}</option>\
+        </select>\
+        </div>\
+        <div class="flew1" style="margin: 10px 0 10px 0">\
+            <input type="text" class="form-control " placeholder="详细地址" id="modify_detailed">\
+            </div>\
+            <input type="checkbox"  id="default" @click="qq()" value="0"><span>默认收获地址</span>\
+            <div class="modal-footer" >\
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+            <button type="button" class="btn btn-primary" @click="modify_address()">提交更改</button>\
+            </div>\
+            </div>\
+            </div>\
+         </div>\
+     </div>',
+        data:function(){
+            return{
+                myprovince:[],
+                mycity:[],
+                myarea:[]
+            }
+
+        },
+        created:function(){
+            this.init();
+        },
+        methods:{
+            //默认
+            init:function () {
+                var _this = this;
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/Personal/init_province')}",
+                    data    :{},
+                    dataType:'json',
+                    success:function (res) {
+                        _this.myprovince = res;
+                    },error:function (res) {
+
+                    }
+                })
+            },
+            //点击省份
+            myProvince:function () {
+
+
+                    var province_id= $("#province_id").val();
+                    var _this = this;
+                    $.ajax({
+                        type:'post',
+                        url:"{:url('index/index/province')}",
+                        data    :{'prvid':province_id},
+                        dataType:'json',
+                        success:function (res) {
+//                        console.log(res)
+                            _this.mycity = res;
+                        },error:function (res) {
+
+                        }
+                    })
+
+
+
+
+            },
+            //点击市区
+            myCity:function () {
+                var city_id= $("#city_id").val();
+
+                var _this = this;
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/index/city')}",
+                    data    :{'city':city_id},
+                    dataType:'json',
+                    success:function (res) {
+//                        console.log(res)
+                        _this.myarea = res;
+                    },error:function (res) {
+
+                    }
+                })
+            },
+            //收获地址添加
+            submit_address:function () {
+                //收货人、收获地址、省、市、区、详情地址
+              var consignee     = $("#consignee").val();
+              var phone         = $("#phone").val();
+              var province_id   = $("#province_id").val();
+              var city_id       = $("#city_id").val();
+              var area_id       = $("#area_id").val();
+              var detailed      =  $("#detailed").val();
+
+                //判断内容是否为空
+                if (consignee!="" && phone!="" && province_id !="0" && city_id !="0" && area_id !="0" && detailed !="")
+                {
+                   //判断收货人命名格式
+                    if(/^[\u4e00-\u9fa5]+$/.test(consignee)){
+                        if(/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{6,}/.test(phone)){
+
+                            $.ajax({
+                                type:'post',
+                                url:"{:url('index/Personal/add_address')}",
+                                data:{
+                                    'consognee':consignee,
+                                    'phone'    :phone,
+                                    'province' :province_id,
+                                    'city'     :city_id,
+                                    'area'     :area_id,
+                                    'detailed' :detailed,
+                                    'aflag'    :0
+                                },
+                                dataType:'json',
+                                success:function (res) {
+                                    if(res.code == 1001)
+                                    {
+                                        alert(res.msg);
+                                        window.location.reload();
+                                    }else
+                                    {
+                                        alert(res.msg);
+                                    }
+                                },error:function (res) {
+
+                                }
+                            })
+                        }else
+                        {
+                            alert('手机号格式有误，请重新输入');
+                        }
+                    }else
+                    {
+                        alert('收货人不符合命名格式，请重新输入')
+                    }
+                }else
+                {
+                    alert("内容不能为空，请填写完毕")
+                }
+
+
+            },
+            //修改地址中省份切换
+            province:function () {
+
+                //市
+                $("#modify_province").children().eq(0).val(0);
+                $("#modify_province").children().eq(0).html('请选择省份');
+                //市
+                $("#modify_city").children().eq(0).val(0);
+                $("#modify_city").children().eq(0).html('请选择市区');
+
+                //区
+                $("#modify_area") .children().eq(0).val(0);
+                $("#modify_area") .children().eq(0).html('请选择辖区');
+
+                var province_id= $("#modify_province").val();
+                var _this = this;
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/index/province')}",
+                    data    :{'prvid':province_id},
+                    dataType:'json',
+                    success:function (res) {
+                        _this.mycity = res;
+                    },error:function (res) {
+
+                    }
+                })
+            },
+            //修改地址中市区切换
+            city:function () {
+                var city_id= $("#modify_city").val();
+
+                var _this = this;
+                $.ajax({
+                    type:'post',
+                    url:"{:url('index/index/city')}",
+                    data    :{'city':city_id},
+                    dataType:'json',
+                    success:function (res) {
+//                        console.log(res)
+                        _this.myarea = res;
+                    },error:function (res) {
+
+                    }
+                })
+            },
+            //默认地址选择
+            qq:function () {
+                if ($("input[type='checkbox']").is(':checked')==true)
+                {
+                    $("#default").val(1)
+                }else
+                {
+                    $("#default").val(0)
+                }
+
+            },
+            //修改收货地址
+            modify_address:function()
+            {
+                //收货人、收获地址、省、市、区、详情地址、受否为默认
+                var consignee  =  $("#modify_consignee").val();
+                var phone      =   $("#modify_phone").val();
+                var province_id    =  $("#modify_province").val();
+                var city_id    =  $("#modify_city").val();
+                var area_id    = $("#modify_area").val();
+                var detailed  =  $("#modify_detailed").val();
+                var aflag    =    $("#default").val();
+
+                //判断内容是否为空
+                if (consignee!="" && phone!="" && province_id !="0" && city_id !="0" && area_id !="0" && detailed !="")
+                {
+                    //判断收货人命名格式
+                    if(/^[\u4e00-\u9fa5]+$/.test(consignee)){
+                        if(/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{6,}/.test(phone)){
+
+                            $.ajax({
+                                type:'post',
+                                url:"{:url('index/Personal/submit_address')}",
+                                data:{
+                                    'consognee':consignee,
+                                    'phone'    :phone,
+                                    'province' :province_id,
+                                    'city'     :city_id,
+                                    'area'     :area_id,
+                                    'detailed' :detailed,
+                                    'aflag'    :aflag
+                                },
+                                dataType:'json',
+                                success:function (res) {
+                                    if(res.code == 1001)
+                                    {
+                                        alert(res.msg);
+                                        window.location.reload();
+                                    }else
+                                    {
+                                        alert(res.msg);
+                                    }
+                                },error:function (res) {
+
+                                }
+                            })
+                        }else
+                        {
+                            alert('手机号格式有误，请重新输入');
+                        }
+                    }else
+                    {
+                        alert('收货人不符合命名格式，请重新输入')
+                    }
+                }else
+                {
+                    alert("内容不能为空，请填写完毕")
+                }
+            }
+        }
+    })
+
+
+    var vue=new Vue({
+        el:'#addressData'
+    });
+</script>
+<script>
+    //iframe 自适应
+    $(window.parent.document).find("#iframeId").load(function () {
+        var main = $(window.parent.document).find("#iframeId");
+        var thisheight = $(document).height() + 1000;
+        main.height(thisheight);
+    });
+</script>
+</html>

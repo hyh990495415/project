@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <script src="__STATIC__/js/angular.js"></script>
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <!--jquery.cookie-->
+    <script src="__STATIC__/js/jquery.cookie.js"></script>
+    <!--个人设置-->
+    <style>
+
+
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        @media (min-width: 768px){
+            /*设置字体*/
+            .font_size{
+                font-size: 24px;
+            }
+            /*菜单功能块*/
+            .co1{
+                width: 20%;
+                background-color: white;
+            }
+            /*菜单内容块*/
+            .co2{
+                width: 60%;
+                text-align: center;
+                background-color: grey;
+            }
+            /*其他块*/
+            .co3{
+                width: 20%;
+                background-color: grey;
+            }
+                /*菜单的间距*/
+            .item{
+                /*flex:1;*/
+                line-height: 40px;
+            }
+
+            .flew1{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+            .flew2{
+                flex:1;
+            }
+            .flew3{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+
+            .flew4{
+                flex:1;
+            }
+        }
+        @media(max-width:768px ){
+            /*菜单功能块*/
+            .co1{
+                width: 100%;
+
+            }
+            /*菜单内容块*/
+            .co2{
+                width: 100%;
+
+            }
+            /*其他块*/
+            .co3{
+                width: 100%;
+                background-color: grey;
+            }
+
+            .flew1{
+                display: flex;
+                /*-webkit-flex 为了兼容性*/
+                display: -webkit-flex;
+                /*flex-direction:row;*/
+                justify-content:  center;
+            }
+
+            .flew2{
+                flex:1;
+
+            }
+
+            .fle1 {
+                display: flex;
+                flex-direction: column;
+                font-size: 20px;
+                text-align: center;
+
+            }
+
+        }
+    </style>
+</head>
+<body>
+<!--<div id="vue">-->
+    <!--&lt;!&ndash;导航条&ndash;&gt;-->
+        <!--<div class="container-default flew1 font_size" style="height: 60px;background-color: #fa9111">-->
+            <!--<div class="item">-->
+            <!--<div class="item"><a href="">首页</a></div>-->
+            <!--<div class="item">-->
+                <!--<span  data-toggle="dropdown">-->
+                    <!--<span class="filter-option pull-right">用户：1001</span>-->
+                <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+                    <!--</span>-->
+                <!--<ul class="dropdown-menu  text-center">-->
+                    <!--<li><a href="">用户中心</a></li>-->
+                    <!--<li><a href="">升级</a></li>-->
+                    <!--<li><a href="">客服中心</a></li>-->
+                <!--</ul></div>-->
+            <!--&emsp;&emsp;-->
+            <!--<div class="item"><a  href="" ><span class="glyphicon glyphicon-off" ></span>退出</a></div>-->
+        <!--</div>-->
+        <!--<div class="container" style="margin-top: 30px">-->
+            <!--<div class="row">-->
+                <!--<div id="menu" class="col-lg-3">-->
+                    <!--<ul class="item font_size">-->
+                        <!--{volist name="menu" id="data"}-->
+                        <!--<li ><a onclick="menu()" url={$data.muntUrl}>{$data.muntName}</a></li>-->
+                        <!--{/volist}-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!--<div class="col-lg-9">-->
+                    <!--<iframe width="100%" id="iframeid" onload="Javascript:SetCwinHeight()" height="1" frameborder="0"-->
+                            <!--scrolling="no" src="{:url('index/Personal/message')}"></iframe>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--&lt;!&ndash;页脚&ndash;&gt;-->
+        <!--<div class="container-default flew1" style="height: 120px;background-color: #333">-->
+            <!--<img src="http://gtms02.alicdn.com/tps/i2/TB1W6egHVXXXXXHXXXXyZnLYXXX-740-115.png" alt="">-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--导航条-->
+<div class=" flew1 font_size " style="height: 80px;background-color: #ffda44;margin-bottom: 10px;">
+        <img  class="img-responsive " style="margin: 5px 0 5px 0" src="//img.alicdn.com/tps/i3/TB1ys1sHVXXXXcrXVXXL_ZfHFXX-208-46.png" alt="">
+        <div class="flew2"  style=" align-self: center;"><a href="#" >首页</a>&emsp;|&emsp;<a href="#" >消息</a></div>
+        <div class="flew2" style=" align-self: center;"><input type="text" class="form-control flw2" placeholder="请输入名称"  ></div>
+        <div class="flew2" style=" align-self: center;"><button  class="btn btn-default ">搜索</button></div>
+        <div class="flew2" style=" align-self: center;"><span id="myusername"></span>&emsp;|&emsp;<a
+                href="{:url('index/Personal/cancel_page')}">注销</a></div>
+</div>
+<!--内容 -->
+<div class="flew3  " style="height: 700px;background-color: #f0f0f0">
+    <div class=" co1 ">
+        <ul class="item font_size fle1 " style="list-style-type: none;text-align: center">
+        <li style="cursor: default;margin-top: 20px">全部功能</li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/message')}" style="color:grey;">个人信息</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/release')}" style="color: grey;">我发布的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/sell')}" style="color: grey;">我卖出的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/purchase')}" style="color: grey;">我买到的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/collection')}" style="color: grey;">我收藏的</a></li>
+            <li style="cursor: pointer"><a class="b4" onclick="menu()" url="{:url('index/Personal/auction')}" style="color: grey;">我拍买的</a></li>
+        <!--{volist name="menu" id="data"}-->
+        <!--<li style="cursor: pointer;"><a class="b4" onclick="menu()" url={$data.muntUrl}-->
+               <!--style="color: grey;">{$data.muntName}</a></li>-->
+        <!--{/volist}-->
+        </ul>
+    </div>
+    &emsp;
+    <div class="co2 " >
+        <iframe width="100%"  style="height: 100%" id="iframeid" onload="Javascript:SetCwinHeight()" height="1"
+                frameborder="0"
+        scrolling="no" src="{:url('index/Personal/message')}"></iframe>
+    </div>
+    <!--<div class="co3 "></div>-->
+</div>
+
+<!--页脚-->
+<div class=" flew1 container-default" style="height: 100px;margin-top: 10px">
+    <div class="flew1 container"  style="margin-top: 10px;align-self: center;">
+        <div>网络文化经营许可证：<a href="#">浙网文[2013]0268-027号</a></div>
+        <div>信息网络传播视听节目许可证：1109364号</div>
+        <div>互联网违法和不良信息举报电话:0571-81683755 blxx@list.alibaba-inc.com</div>
+    </div>
+</div>
+<!--<div class="flew1 container" style="margin-top: 10px;border-top: 1px solid #ababab">-->
+    <!--<div>网络文化经营许可证：<a href="#">浙网文[2013]0268-027号</a></div>-->
+    <!--<div>信息网络传播视听节目许可证：1109364号</div>-->
+    <!--<div>互联网违法和不良信息举报电话:0571-81683755 blxx@list.alibaba-inc.com</div>-->
+<!--</div>-->
+</body>
+<script>
+
+// 菜单点击事件
+    function menu() {
+             var url= $(event.target).attr('url');
+//             console.log(url);
+            $("iframe").prop("src",url);
+    }
+
+// 菜单 鼠标触发事件
+$(function(){
+    $(".b4").on({
+        mouseover : function(){
+            $(this).css("color","red");
+        } ,
+        mouseout : function(){
+            $(this).css("color","grey");
+        }
+    }) ;
+}) ;
+//    ifreme 自适应
+function SetCwinHeight()
+ {
+       var iframeid=document.getElementById("iframeid"); //iframe id
+       if (document.getElementById)
+           {
+                if (iframeid && !window.opera)
+                 {
+                    if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+                            iframeid.height = iframeid.contentDocument.body.offsetHeight;
+                         }
+                      else if(iframeid.Document && iframeid.Document.body.scrollHeight)
+                        {
+                            iframeid.height = iframeid.Document.body.scrollHeight;
+                         }
+                  }
+         }
+     }
+
+     var login = "{:url('index/index/index')}"
+</script>
+<script src="__STATIC__/js/personal_index.js"></script>
+</html>

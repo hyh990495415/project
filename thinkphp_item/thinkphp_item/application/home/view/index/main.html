@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>首页</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="__STATIC__/js/jquery-1.12.3.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="__STATIC__/js/bootstrap.min.js"></script>
+    <style>
+        .myNav{
+            background-color: #ffda44;
+        }
+        .bannerFont{
+            font-size: 16px;
+            color: black;
+            margin: 5px;
+        }
+        .banner-li{
+            line-height: 38px;
+        }
+        .banner-li>li{
+            margin-left: 5px;
+            margin-right: 5px;
+            border-bottom: 1px solid lightgrey;
+        }
+        .extend {
+            height: 60px;
+            line-height: 60px;
+            background-color: #f4f4f4;
+            cursor: pointer;
+        }
+        @media (min-width: 768px) {
+            #myTabContent{
+                height:160px;
+            }
+            .friendsSale{
+                height:160px;
+            }
+            .tag-cloud {
+                height: 60px;
+            }
+            .tag-cloud>a{
+                margin: 10px;
+            }
+            .likeImg{
+                height:120px;
+            }
+        }
+        @media (max-width: 768px) {
+            .likeImg{
+                height:120px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="nav navbar-default myNav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{:url('home/Index/main')}">闲趣</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNav" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="row collapse navbar-collapse navbar-ex1-collapse " id="myNav">
+            <ul class="nav navbar-nav text-center">
+                <li><a href="#">首页</a></li>
+                <li>
+                    <a href="#">拍卖中心</a>
+                </li>
+                <li>
+                    <a href="#">菜单三</a>
+                </li>
+                <li>
+                    <a href="#">发布闲置</a>
+                </li>
+                <li><a href="#">我的闲趣</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="myClass">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3" style="margin-top:20px;">
+                <allclass></allclass>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 " style="margin-top:20px;" id="myBanner">
+                <!--<section id="banner" class="carousel slide" data-ride="carousel">
+                    &lt;!&ndash;小圆点 &ndash;&gt;
+                    <ol class="carousel-indicators">
+                        <li v-for="x in banner" data-target="#banner" :data-slide-to="x.bid" v-if="x.bid==1" class="active"></li>
+                        <li v-for="y in banner" data-target="#banner" v-if="y.bid!=1" :data-slide-to="y.bid"></li>
+                        &lt;!&ndash;<li data-target="#banner" data-slide-to="1"></li>
+                        <li data-target="#banner" data-slide-to="2"></li>
+                        <li data-target="#banner" data-slide-to="3"></li>&ndash;&gt;
+                    </ol>
+                    &lt;!&ndash; 轮播图片 &ndash;&gt;
+                    <div class="carousel-inner" role="listbox">
+                        <img v-for="x in banner" v-if="x.bid==1" class="item active img-responsive center-block" :src="x.image" alt="">
+                        <img v-for="x in banner" v-if="x.bid!=1" class="item img-responsive center-block" :src="x.image" alt="">
+                       &lt;!&ndash; <img class="item img-responsive center-block" src="http://gw.alicdn.com/tps/i3/TB19zkLJXXXXXc3XFXXhXAC0FXX-640-247.jpg" alt="">
+                        <img class="item img-responsive center-block" src="http://img.alicdn.com/tps/TB1Ntl6NpXXXXaIXpXXXXXXXXXX-640-270.jpg" alt="">&ndash;&gt;
+                    </div>
+                    &lt;!&ndash; 左右轮播 &ndash;&gt;
+                    <a class="left carousel-control" href="#banner" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#banner" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </section>-->
+                <!--<div class="table-bordered">
+                    <img class="img-responsive center-block" src="http://img.alicdn.com/tps/TB1Ntl6NpXXXXaIXpXXXXXXXXXX-640-270.jpg" alt="">
+                </div>-->
+                <mybanner></mybanner>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="margin-top:20px;">
+                <div class=" table-bordered">
+                    <div class="extend text-center">
+                        <a href="{:url('home/Index/publish')}">发布闲置</a>
+                    </div>
+                    <div>
+                        <img class="img-responsive center-block" src="//img.alicdn.com/tps/i4/TB1OntPFVXXXXXSXpXX7WcCNVXX-400-400.png" width="140" alt="">
+                        <p class="text-center">扫码下载闲趣客户端</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 " style="margin-top:20px;">
+                <div class="table-bordered">
+                    <img style="margin: 20px" src="https://wwc.alicdn.com/avatar/getAvatar.do?userNick=%E5%B0%8F%E7%90%AA%E8%B6%A3%E9%A5%BC%E5%B9%B2&width=60&height=60&type=sns" alt="">
+                    <span class="foreword">Hi，小琪趣饼干</span>
+                    <p style="margin: 10px"><strong>您当前位于:</strong></p>
+                    <div class="tag-cloud">
+                        <span style="margin-left: 10px">{$province}</span>
+                        <span>{$city}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9" style="margin-top:20px;">
+                <div class="table-bordered">
+                    <ul  id="myTab" class="nav nav-tabs">
+                        <li role="presentation" class="active">
+                            <a href="#guess" data-toggle="tab">猜你喜欢</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#transaction" data-toggle="tab">同城交易</a>
+                        </li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade in active" id="guess">
+                            <guesslike></guesslike>
+                        </div>
+                        <div class="tab-pane fade" id="transaction">
+                            <transaction></transaction>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--<div class="col-lg-3 col-md-3 col-sm-3" style="margin-top:20px;">
+                <p style="line-height: 35px;">好友正在出售</p>
+                <div class="table-bordered friendsSale" ></div>
+            </div>-->
+        </div>
+    </div>
+    <div class="container" id="myProduct">
+        <classdetail></classdetail>
+    </div>
+</div>
+<div class="container-fluid myNav" style="height: 90px;margin-top: 20px"></div>
+</body>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var getClass='{:url("home/Index/getClass")}';
+    var getBanner='{:url("home/Index/getBanner")}';
+    var getLocalProduct='{:url("home/Index/getLocalProduct")}';
+    var guessLike='{:url("home/Index/guessLike")}'
+</script>
+<script src="__STATIC__/js/home.js"></script>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--bootstrap css-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--angular JS-->
+    <script src="__STATIC__/js/angular.js"></script>
+    <!-- jQuery -->
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- vue -->
+    <script src="__STATIC__/js/vue.js"></script>
+    <!--个人设置-->
+    <style>
+        .item{
+            flex:1;
+            line-height: 70px;
+        }
+        .flew1{
+            display: flex;
+            /*-webkit-flex 为了兼容性*/
+            display: -webkit-flex;
+            /*flex-direction:row;*/
+            justify-content: center;
+        }
+
+        /*限制a连接出现下划线*/
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: none;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        @media (min-width: 768px){
+            .font_size{
+                font-size: 24px;
+                list-style: none;
+
+            }
+        }
+        @media(max-width:768px ){
+        }
+    </style>
+</head>
+<body>
+<div id="vue">
+    <!--导航条-->
+        <div class="container-default flew1 font_size" style="height: 60px;background-color: #fa9111">
+            <div class="item"><img class="img-responsive" src="https://www.wjx.cn/images/newimg/index/mobieindexnew.png" ></div>
+            <div class="item"><a href="">首页</a></div>
+            <div class="item">
+                <span  data-toggle="dropdown">
+                    <span class="filter-option pull-right">用户：1001</span>
+                <!--<span class="caret"></span>-->
+                    </span>
+                <ul class="dropdown-menu  text-center">
+                    <li><a href="">用户中心</a></li>
+                    <li><a href="">升级</a></li>
+                    <li><a href="">客服中心</a></li>
+                </ul></div>
+            &emsp;&emsp;
+            <div class="item"><a  href="" ><span class="glyphicon glyphicon-off" ></span>退出</a></div>
+        </div>
+        <div class="container" style="margin-top: 30px">
+            <div class="row">
+                <div id="menu" class="col-lg-3">
+                    <ul class="item font_size">
+                        {volist name="menu" id="data"}
+                        <li ><a onclick="menu()" url={$data.muntUrl}>{$data.muntName}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <iframe width="100%" id="iframeid" onload="Javascript:SetCwinHeight()" height="1" frameborder="0"
+                            scrolling="no" src="{:url('index/Personal/message')}"></iframe>
+                </div>
+            </div>
+        </div>
+    <!--页脚-->
+        <div class="container-default flew1" style="height: 120px;background-color: #333">
+            <img src="http://gtms02.alicdn.com/tps/i2/TB1W6egHVXXXXXHXXXXyZnLYXXX-740-115.png" alt="">
+        </div>
+    </div>
+</body>
+<script>
+
+// 菜单点击事件
+    function menu() {
+             var url= $(event.target).attr('url');
+//             console.log(url);
+            $("iframe").prop("src",url);
+    }
+
+//    ifreme 自适应
+function SetCwinHeight()
+ {
+       var iframeid=document.getElementById("iframeid"); //iframe id
+       if (document.getElementById)
+           {
+                if (iframeid && !window.opera)
+                 {
+                    if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+                            iframeid.height = iframeid.contentDocument.body.offsetHeight;
+                         }
+                      else if(iframeid.Document && iframeid.Document.body.scrollHeight)
+                        {
+                            iframeid.height = iframeid.Document.body.scrollHeight;
+                         }
+                  }
+         }
+     }
+
+</script>
+</html>
